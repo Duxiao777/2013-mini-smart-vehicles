@@ -430,9 +430,6 @@ namespace msv {
         // This counter switches between the various requests from the car.
         uint32_t query_counter = 0;
 
-        // This speed_counter enables an alternating speed setting of the motor.
-        uint32_t speed_counter = 0;
-
 	    while (getModuleState() == ModuleState::RUNNING) {
             // Try to wait for the "start" signal: The file "/sys/class/gpio/gpio138/value" is available and changes from 1 --> 0.
             if (!start_data_transmission_to_vehicle) {
@@ -568,13 +565,7 @@ namespace msv {
                     double speed = (ACCELERATION_MAX * acceleration) / (127.0 - ACCELERATION_HYSTERESIS);
 */
 
-                    double speed = 0;
-
-                    if (speed_counter == 0) { speed = 6.0;}
-                    else {speed = 0;}
-
-                    speed_counter++;
-                    speed_counter%=2;
+                    double speed = 1;
 
                     if (fabs(acceleration) < 5) {
                         speed = 0;
