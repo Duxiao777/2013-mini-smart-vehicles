@@ -17,7 +17,10 @@
 
 #include "plugins/configurationviewer/ConfigurationViewerPlugIn.h"
 #include "plugins/controller/ControllerPlugIn.h"
+#include "plugins/cutter/CutterPlugIn.h"
 #include "plugins/forcecontrolviewer/ForceControlViewerPlugIn.h"
+#include "plugins/iruscharts/IrUsChartsPlugIn.h"
+#include "plugins/irusmap/IrUsMapPlugIn.h"
 #include "plugins/sharedimageviewer/SharedImageViewerPlugIn.h"
 #include "plugins/spy/SpyPlugIn.h"
 
@@ -44,13 +47,23 @@ namespace cockpit {
             // TODO: Read available plugins from .so-files.
             m_listOfAvailablePlugIns.push_back("ConfigurationViewer");
             m_listOfAvailablePlugIns.push_back("Controller");
+            m_listOfAvailablePlugIns.push_back("Cutter");
+#ifndef PANDABOARD
             m_listOfAvailablePlugIns.push_back("ForceControlViewer");
+            m_listOfAvailablePlugIns.push_back("IrUsCharts");
+#endif
+            m_listOfAvailablePlugIns.push_back("IrUsMap");
             m_listOfAvailablePlugIns.push_back("SharedImageViewer");
             m_listOfAvailablePlugIns.push_back("Spy");
 
             m_listOfDescriptions["ConfigurationViewer"] = tr("This plugin displays the current configuration.").toStdString();
             m_listOfDescriptions["Controller"] = tr("This plugin allows the control of the vehicle by the arrow keys.").toStdString();
+            m_listOfDescriptions["Cutter"] = tr("This plugin allows to filter & cut recordings.").toStdString();
+#ifndef PANDABOARD
             m_listOfDescriptions["ForceControlViewer"] = tr("This plugin displays the values of ForceControl over time.").toStdString();
+            m_listOfDescriptions["IrUsCharts"] = tr("This plugin displays the values of SensorBoardData over time.").toStdString();
+#endif
+            m_listOfDescriptions["IrUsMap"] = tr("This plugin displays the current irus readings.").toStdString();
             m_listOfDescriptions["SharedImageViewer"] = tr("This plugin displays shared images.").toStdString();
             m_listOfDescriptions["Spy"] = tr("This plugin displays all distributed containers.").toStdString();
         }
@@ -87,9 +100,23 @@ namespace cockpit {
             } else if (name == "Controller") {
                 cerr << "Creating Controller" << endl;
                 plugIn = core::SharedPointer<PlugIn>((PlugIn*)(new controller::ControllerPlugIn("Controller", m_kvc, m_conference, m_parent)));
-            } else if (name == "ForceControlViewer") {
+            } else if (name == "Cutter") {
+                cerr << "Creating Cutter" << endl;
+                plugIn = core::SharedPointer<PlugIn>(new cutter::CutterPlugIn("Cutter", m_kvc, m_parent));
+            }
+#ifndef PANDABOARD
+            else if (name == "ForceControlViewer") {
                 cerr << "Creating ForceControlViewer" << endl;
                 plugIn = core::SharedPointer<PlugIn>(new forcecontrolviewer::ForceControlViewerPlugIn("ForceControlViewer", m_kvc, m_parent));
+            }
+            else if (name == "IrUsCharts") {
+                cerr << "Creating IrUsCharts" << endl;
+                plugIn = core::SharedPointer<PlugIn>(new iruscharts::IrUsChartsPlugIn("IrUsCharts", m_kvc, m_parent));
+            }
+#endif
+            else if (name == "IrUsMap") {
+                cerr << "Creating IrUsMap" << endl;
+                plugIn = core::SharedPointer<PlugIn>(new irusmap::IrUsMapPlugIn("IrUsMap", m_kvc, m_parent));
             } else if (name == "SharedImageViewer") {
                 cerr << "Creating SharedImageViewer" << endl;
                 plugIn = core::SharedPointer<PlugIn>(new sharedimageviewer::SharedImageViewerPlugIn("SharedImageViewer", m_kvc, m_parent));

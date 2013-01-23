@@ -105,10 +105,12 @@ namespace cockpit {
         while (isRunning()) {
         	waitForData();
 
-            // Distribute new containers.
-            for (uint32_t i = 0; i < getFIFOSize(); i++) {
-            	Container c = leaveContainer();
-                distributeContainer(c);
+            if (isRunning()) {
+                // Distribute new containers.
+                for (uint32_t i = 0; i < getFIFOSize(); i++) {
+                	Container c = leaveContainer();
+                    distributeContainer(c);
+                }
             }
         }
     }

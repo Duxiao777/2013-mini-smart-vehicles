@@ -4,6 +4,10 @@
  * This software is open source. Please see COPYING and AUTHORS for further information.
  */
 
+#ifdef PANDABOARD
+#include <stdc-predef.h>
+#endif
+
 #include "core/base/Hash.h"
 #include "core/base/Deserializer.h"
 #include "core/base/SerializationFactory.h"

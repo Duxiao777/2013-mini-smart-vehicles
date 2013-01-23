@@ -45,6 +45,7 @@
 #include <Qt/qpainter.h>
 #include <Qt/qprogressbar.h>
 #include <Qt/qpushbutton.h>
+#include <Qt/qscrollarea.h>
 #include <Qt/qslider.h>
 #include <Qt/qspinbox.h>
 #include <Qt/qstandarditemmodel.h>

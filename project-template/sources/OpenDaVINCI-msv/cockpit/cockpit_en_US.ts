@@ -174,29 +174,71 @@
     </message>
 </context>
 <context>
+    <name>CutterWidget</name>
+    <message>
+        <location filename="src/plugins/cutter/CutterWidget.cpp" line="69"/>
+        <source>Open previous recording file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/cutter/CutterWidget.cpp" line="69"/>
+        <location filename="src/plugins/cutter/CutterWidget.cpp" line="133"/>
+        <source>Recording files (*.rec)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/cutter/CutterWidget.cpp" line="133"/>
+        <source>Save selected types of containers to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IrUsMapWidgetControl</name>
+    <message>
+        <location filename="src/plugins/irusmap/IrUsMapWidgetControl.cpp" line="42"/>
+        <source>Scale: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlugInProvider</name>
     <message>
-        <location filename="src/plugins/PlugInProvider.cpp" line="51"/>
+        <location filename="src/plugins/PlugInProvider.cpp" line="59"/>
         <source>This plugin displays the current configuration.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/PlugInProvider.cpp" line="52"/>
+        <location filename="src/plugins/PlugInProvider.cpp" line="60"/>
         <source>This plugin allows the control of the vehicle by the arrow keys.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/PlugInProvider.cpp" line="53"/>
+        <location filename="src/plugins/PlugInProvider.cpp" line="61"/>
+        <source>This plugin allows to filter &amp; cut recordings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/PlugInProvider.cpp" line="63"/>
         <source>This plugin displays the values of ForceControl over time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/PlugInProvider.cpp" line="54"/>
+        <location filename="src/plugins/PlugInProvider.cpp" line="64"/>
+        <source>This plugin displays the values of SensorBoardData over time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/PlugInProvider.cpp" line="66"/>
+        <source>This plugin displays the current irus readings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/PlugInProvider.cpp" line="67"/>
         <source>This plugin displays shared images.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/PlugInProvider.cpp" line="55"/>
+        <location filename="src/plugins/PlugInProvider.cpp" line="68"/>
         <source>This plugin displays all distributed containers.</source>
         <translation type="unfinished"></translation>
     </message>

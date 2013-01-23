@@ -144,12 +144,14 @@ namespace cockpit {
     }
 
     void CockpitWindow::close() {
+        m_multiplexer->stop();
+
         if (m_cockpitArea != NULL) {
             if (m_cockpitArea->subWindowList().size() > 0) {
                 m_cockpitArea->closeAllSubWindows();
             }
         }
-        QWidget::close();
+        qApp->exit();
     }
 
     void CockpitWindow::showPlugIn(QListWidgetItem *item) {

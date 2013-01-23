@@ -7,6 +7,10 @@
 #ifndef SENSORBOARDDATA_H_
 #define SENSORBOARDDATA_H_
 
+#ifdef PANDABOARD
+#include <stdc-predef.h>
+#endif
+
 // core/platform.h must be included to setup platform-dependent header files and configurations.
 #include "core/platform.h"
 

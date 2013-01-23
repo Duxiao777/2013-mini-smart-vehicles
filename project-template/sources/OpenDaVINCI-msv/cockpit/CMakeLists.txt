@@ -1,5 +1,5 @@
 #
-# OpenDaVINCI.
+# Mini-Smart-Vehicles.
 #
 # This software is open source. Please see COPYING and AUTHORS for further information.
 #
@@ -17,8 +17,8 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 SET (LIBS ${LIBS} QtCore QtGui)
 
 IF("${PANDABOARD}" STREQUAL "YES")
-    SET (CMAKE_C_FLAGS "-march=armv7-a -pipe -O2 -Wall -W -D_REENTRANT -DQT_WEBKIT -DQT_NO_DEBUG -DQT_CORE_LIB -DQT_SHARED -D PANDABOARD=1")
-    SET (CMAKE_CXX_FLAGS "-march=armv7-a -pipe -O2 -Wall -W -D_REENTRANT -DQT_WEBKIT -DQT_NO_DEBUG -DQT_CORE_LIB -DQT_SHARED -D PANDABOARD=1")
+    SET (CMAKE_C_FLAGS "-march=armv7-a -pipe -O2 -Wall -W -D_REENTRANT -DQT_WEBKIT -DQT_NO_DEBUG -DQT_CORE_LIB -DQT_SHARED -Wno-deprecated -D PANDABOARD=1")
+    SET (CMAKE_CXX_FLAGS "-march=armv7-a -pipe -O2 -Wall -W -D_REENTRANT -DQT_WEBKIT -DQT_NO_DEBUG -DQT_CORE_LIB -DQT_SHARED -Wno-deprecated -D PANDABOARD=1")
 
     INCLUDE_DIRECTORIES (${PANDABOARD-ROOT}/usr/include)
     LINK_DIRECTORIES (${PANDABOARD-ROOT}/lib ${PANDABOARD-ROOT}/usr/lib ${PANDABOARD-ROOT}/usr/lib/arm-linux-gnueabi ${PANDABOARD-ROOT}/usr/lib/lapack ${PANDABOARD-ROOT}/usr/lib/libblas)
@@ -32,6 +32,7 @@ ENDIF("${PANDABOARD}" STREQUAL "YES")
 
 # Include directories from core.
 INCLUDE_DIRECTORIES (${libopendavinci_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES (${CMAKE_CURRENT_SOURCE_DIR}/../msv/msv-data/include)
 INCLUDE_DIRECTORIES (include)
 
 # Recipe for generating MOC files.
@@ -39,10 +40,12 @@ FILE(GLOB_RECURSE cockpit-headers "${CMAKE_CURRENT_SOURCE_DIR}/include" *.h)
 QT4_WRAP_CPP(cockpit-headers-moc ${cockpit-headers})
 
 # Recipe for building "cockpit".
+SET(MSVDATA ${CMAKE_CURRENT_SOURCE_DIR}/../msv/msv-data/src/SensorBoardData.cpp)
+
 FILE(GLOB_RECURSE cockpit-sources "${CMAKE_CURRENT_SOURCE_DIR}/src" *.cpp)
 
 # Translations.
-set(myapp_TRANSLATIONS
+SET(myapp_TRANSLATIONS
     cockpit_de_DE.ts
     cockpit_en_US.ts
 )
@@ -56,9 +59,9 @@ QT4_CREATE_TRANSLATION(QM_FILES ${FILES_TO_TRANSLATE} ${myapp_TRANSLATIONS})
 QT4_ADD_TRANSLATION(QM ${myapp_TRANSLATIONS})
 
 # Build the binary.
-ADD_LIBRARY (cockpitlib STATIC ${cockpit-sources} ${cockpit-headers-moc})
+ADD_LIBRARY (cockpitlib STATIC ${cockpit-sources} ${MSVDATA} ${cockpit-headers-moc})
 ADD_EXECUTABLE (cockpit "${CMAKE_CURRENT_SOURCE_DIR}/apps/MainModule.cpp" ${QM})
-TARGET_LINK_LIBRARIES (cockpit cockpitlib ${CCDATA_LIBS} ${OPENDAVINCI_LIBS} ${LIBS}) 
+TARGET_LINK_LIBRARIES (cockpit cockpitlib ${OPENDAVINCI_LIBS} ${LIBS}) 
 
 # Recipe for installing "cockpit".
 INSTALL(TARGETS cockpit RUNTIME DESTINATION bin) 
@@ -68,6 +71,6 @@ IF(CXXTEST_FOUND)
     FILE(GLOB_RECURSE cockpit-testsuites "${CMAKE_CURRENT_SOURCE_DIR}/testsuites/*.h")
     
     CXXTEST_ADD_TEST(cockpitTestSuite cockpitTestSuite.cpp ${cockpit-testsuites})
-    TARGET_LINK_LIBRARIES(cockpitTestSuite cockpitlib ${CCDATA_LIBS} ${OPENDAVINCI_LIBS} ${LIBS})
+    TARGET_LINK_LIBRARIES(cockpitTestSuite cockpitlib ${OPENDAVINCI_LIBS} ${LIBS})
 ENDIF(CXXTEST_FOUND)
 
