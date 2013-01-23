@@ -11,12 +11,7 @@ PROJECT (OPENDAVINCI)
 # Set compile flags.
 IF(UNIX)
     SET (CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-fPIC")
-
-    IF("${PANDABOARD}" STREQUAL "YES")
-        SET (CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pipe")
-    ELSE("${PANDABOARD}" STREQUAL "YES")
-        SET (CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-deprecated -Wall -Werror -Wextra -Wfloat-equal -Wshadow -Wpointer-arith -Wwrite-strings -Wpacked -Wredundant-decls -Wmissing-format-attribute -pipe")
-    ENDIF("${PANDABOARD}" STREQUAL "YES")
+    SET (CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-deprecated -Wall -Werror -Wextra -Wfloat-equal -Wshadow -Wpointer-arith -Wwrite-strings -Wpacked -Wredundant-decls -Wmissing-format-attribute -ansi -pipe")
 
     # Remove "-ansi" flag for clang on Darwin.
     IF(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
@@ -49,12 +44,6 @@ ENDIF(CXXTEST_FOUND)
 
 ######################################################################################
 
-# Deployment (untested!).
-
-INCLUDE (CPack)
-
-######################################################################################
-
 # Add subdirectories.
 ADD_SUBDIRECTORY (3rdParty)
 ADD_SUBDIRECTORY (libopendavinci)
@@ -65,6 +54,6 @@ ADD_SUBDIRECTORY (spy)
 ADD_SUBDIRECTORY (cockpit)
 ADD_SUBDIRECTORY (examples)
 
-# MSV sources.
+# Mini-Smart-Vehicles sources.
 ADD_SUBDIRECTORY (msv)
 
