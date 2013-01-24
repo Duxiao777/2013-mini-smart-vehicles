@@ -12,9 +12,12 @@
 #endif
 
 #include <deque>
+#include <map>
+#include <string>
 #include <vector>
 
 #include "core/base/KeyValueConfiguration.h"
+#include "core/base/Mutex.h"
 #include "core/data/Container.h"
 #include "core/io/ContainerListener.h"
 
@@ -71,6 +74,8 @@ namespace cockpit {
 
                 public slots:
                     void TimerEvent();
+                    void saveRecordingsFile();
+                    void saveCSVFile();
 
                 private:
 #ifndef PANDABOARD
@@ -78,7 +83,13 @@ namespace cockpit {
                     vector<QwtPlotCurve*> m_listOfPlotCurves;
                     vector<IrUsChartData*> m_listOfData;
 #endif
+                    map<uint32_t, string> m_mapOfSensors;
                     deque<msv::SensorBoardData> m_data;
+                    uint32_t m_bufferMax;
+                    core::base::Mutex m_receivedSensorBoardDataContainersMutex;
+                    deque<core::data::Container> m_receivedSensorBoardDataContainers;
+
+                    QLabel *m_bufferFilling;
             };
         }
     }

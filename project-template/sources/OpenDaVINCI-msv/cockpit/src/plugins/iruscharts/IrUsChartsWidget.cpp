@@ -11,8 +11,12 @@
 #include <cmath>
 #include <sstream>
 
+#include "core/base/Mutex.h"
+#include "core/base/Lock.h"
 #include "core/data/Constants.h"
 #include "core/data/Container.h"
+#include "core/io/StreamFactory.h"
+#include "core/io/URL.h"
 
 #include "QtIncludes.h"
 
@@ -38,7 +42,12 @@ namespace cockpit {
             IrUsChartsWidget::IrUsChartsWidget(const PlugIn &/*plugIn*/, const core::base::KeyValueConfiguration &/*kvc*/, QWidget *prnt) :
                 QWidget(prnt),
 #endif
-                m_data() {
+                m_mapOfSensors(),
+                m_data(),
+                m_bufferMax(10000),
+                m_receivedSensorBoardDataContainersMutex(),
+                m_receivedSensorBoardDataContainers(),
+                m_bufferFilling(NULL) {
 
                 // Set size.
                 setMinimumSize(640, 480);
@@ -53,6 +62,8 @@ namespace cockpit {
                     stringstream sensorName;
                     sensorName << "irus.sensor" << i << ".name";
                     string name(kvc.getValue<string>(sensorName.str()));
+
+                    m_mapOfSensors[id] = name;
 
                     stringstream sensorDistanceFOV;
                     sensorDistanceFOV << "irus.sensor" << i << ".distanceFOV";
@@ -97,7 +108,22 @@ namespace cockpit {
                 widgetForScrolling->setLayout(plotsLayout);
                 scrollArea->setWidget(widgetForScrolling);
 
-                QHBoxLayout *mainLayout = new QHBoxLayout(this);
+                // Buffer control.
+                m_bufferFilling = new QLabel("Ringbuffer: 0 SensorBoardData received.");
+
+                QPushButton *saveRecordingsFileBtn = new QPushButton("Save as .rec", this);
+                QObject::connect(saveRecordingsFileBtn, SIGNAL(clicked()), this, SLOT(saveRecordingsFile()));
+
+                QPushButton *saveCSVFileBtn = new QPushButton("Save as .csv", this);
+                QObject::connect(saveCSVFileBtn, SIGNAL(clicked()), this, SLOT(saveCSVFile()));
+
+                QHBoxLayout *controlLayout = new QHBoxLayout();
+                controlLayout->addWidget(m_bufferFilling);
+                controlLayout->addWidget(saveRecordingsFileBtn);
+                controlLayout->addWidget(saveCSVFileBtn);
+
+                QVBoxLayout *mainLayout = new QVBoxLayout(this);
+                mainLayout->addLayout(controlLayout);
                 mainLayout->addWidget(scrollArea);
 
                 setLayout(mainLayout);
@@ -117,6 +143,93 @@ namespace cockpit {
                     (*it)->replot();
                 }
 #endif
+                {
+                    Lock l(m_receivedSensorBoardDataContainersMutex);
+
+                    stringstream s;
+                    s << "Ringbuffer: " << m_receivedSensorBoardDataContainers.size() << "/" << m_bufferMax << " SensorBoardData received.";
+
+                    m_bufferFilling->setText(s.str().c_str());
+                }
+            }
+
+            void IrUsChartsWidget::saveRecordingsFile() {
+                string fn = QFileDialog::getSaveFileName(this, tr("Save received containers as .rec file"), "", tr("Recording files (*.rec)")).toStdString();
+                {
+                    Lock l(m_receivedSensorBoardDataContainersMutex);
+
+                    if (!fn.empty()) {
+                        stringstream s;
+                        s << "file://" << fn;
+                        core::io::URL url(s.str());
+
+                        try {
+                            ostream *out = &(core::io::StreamFactory::getInstance().getOutputStream(url));
+
+                            deque<Container>::iterator it = m_receivedSensorBoardDataContainers.begin();
+                            for(;it < m_receivedSensorBoardDataContainers.end(); it++) {
+                                *out << (*it);
+                            }
+
+                            out->flush();
+                        }
+                        catch(core::exceptions::InvalidArgumentException &iae) {
+                            cerr << "Error: " << iae.toString() << endl;
+                        }
+                    }
+
+                }
+            }
+
+            void IrUsChartsWidget::saveCSVFile() {
+                string fn = QFileDialog::getSaveFileName(this, tr("Save received containers as .csv file"), "", tr("CSV files (*.csv)")).toStdString();
+                {
+                    Lock l(m_receivedSensorBoardDataContainersMutex);
+
+                    if (!fn.empty()) {
+                        stringstream s;
+                        s << "file://" << fn;
+                        core::io::URL url(s.str());
+
+                        try {
+                            ostream *out = &(core::io::StreamFactory::getInstance().getOutputStream(url));
+
+                            // Write header.
+                            *out << "Time stamp sent long" << ";" << "Time stamp sent short [microseconds]" << ";" << "Time stamp received long" << ";" << "Time stamp received short [microseconds]";
+
+                            map<uint32_t, string>::iterator jt = m_mapOfSensors.begin();
+                            for(;jt != m_mapOfSensors.end(); jt++) {
+                                *out << ";" << jt->second;
+                            }
+                            *out << endl;
+
+                            deque<Container>::iterator it = m_receivedSensorBoardDataContainers.begin();
+                            for(;it != m_receivedSensorBoardDataContainers.end(); it++) {
+                                Container c = (*it);
+                                msv::SensorBoardData sbd = c.getData<msv::SensorBoardData>();
+
+                                // Write time stamps.
+                                *out << c.getSentTimeStamp().getYYYYMMDD_HHMMSSms() << ";";
+                                *out << c.getSentTimeStamp().toMicroseconds() << ";";
+                                *out << c.getReceivedTimeStamp().getYYYYMMDD_HHMMSSms() << ";";
+                                *out << c.getReceivedTimeStamp().toMicroseconds();
+
+                                // Write data.
+                                map<uint32_t, string>::iterator jt2 = m_mapOfSensors.begin();
+                                for(;jt2 != m_mapOfSensors.end(); jt2++) {
+                                    *out << ";" << sbd.getDistance(jt2->first);
+                                }
+                                *out << endl;
+                            }
+
+                            out->flush();
+                        }
+                        catch(core::exceptions::InvalidArgumentException &iae) {
+                            cerr << "Error: " << iae.toString() << endl;
+                        }
+                    }
+
+                }
             }
 
             void IrUsChartsWidget::nextContainer(Container &container) {
@@ -127,6 +240,13 @@ namespace cockpit {
 
                     if (m_data.size() > 10*15) {
                         m_data.pop_front();
+                    }
+
+                    {
+                        Lock l(m_receivedSensorBoardDataContainersMutex);
+                        if (m_receivedSensorBoardDataContainers.size() < m_bufferMax) {
+                            m_receivedSensorBoardDataContainers.push_back(container);
+                        }
                     }
                 }
             }

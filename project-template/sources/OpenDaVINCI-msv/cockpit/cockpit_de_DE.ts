@@ -193,6 +193,29 @@
     </message>
 </context>
 <context>
+    <name>IrUsChartsWidget</name>
+    <message>
+        <location filename="src/plugins/iruscharts/IrUsChartsWidget.cpp" line="157"/>
+        <source>Save received containers as .rec file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/iruscharts/IrUsChartsWidget.cpp" line="157"/>
+        <source>Recording files (*.rec)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/iruscharts/IrUsChartsWidget.cpp" line="185"/>
+        <source>Save received containers as .csv file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/iruscharts/IrUsChartsWidget.cpp" line="185"/>
+        <source>CSV files (*.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>IrUsMapWidgetControl</name>
     <message>
         <location filename="src/plugins/irusmap/IrUsMapWidgetControl.cpp" line="42"/>
