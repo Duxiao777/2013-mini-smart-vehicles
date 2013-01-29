@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 22
+/svn/!svn/ver/75/trunk
+END
+dialog.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/38/trunk/dialog.cpp
+END
+licence.txt
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/2/trunk/licence.txt
+END
+dialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/38/trunk/dialog.h
+END
+mainwindow.ui
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/73/trunk/mainwindow.ui
+END
+transferthread.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/67/trunk/transferthread.cpp
+END
+stlinkv2.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/71/trunk/stlinkv2.cpp
+END
+mainwindow.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/71/trunk/mainwindow.cpp
+END
+49-stlinkv2.rules
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/44/trunk/49-stlinkv2.rules
+END
+LibUsb.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/71/trunk/LibUsb.cpp
+END
+mainwindow.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/67/trunk/mainwindow.h
+END
+transferthread.h
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/37/trunk/transferthread.h
+END
+stlinkv2.h
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/65/trunk/stlinkv2.h
+END
+devices.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/59/trunk/devices.cpp
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/68/trunk/main.cpp
+END
+LibUsb.h
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/41/trunk/LibUsb.h
+END
+libusbwrapper.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/2/trunk/libusbwrapper.h
+END
+devices.h
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/30/trunk/devices.h
+END
+qstlink2.rc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/50/trunk/qstlink2.rc
+END
+dialog.ui
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/73/trunk/dialog.ui
+END
+STlinkV2.pro
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/69/trunk/STlinkV2.pro
+END
