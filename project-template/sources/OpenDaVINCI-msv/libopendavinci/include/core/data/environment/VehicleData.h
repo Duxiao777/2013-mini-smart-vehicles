@@ -114,6 +114,34 @@ namespace core {
                      */
                     void setTemp(const double &temp);
 
+                    /**
+                     * This method returns the traveled path (absolute).
+                     *
+                     * @return Absolutely driven path.
+                     */
+                    double getAbsTraveledPath() const;
+
+                    /**
+                     * This method sets the traveled path (absolute).
+                     *
+                     * @param adp Absolutely driven path.
+                     */
+                    void setAbsTraveledPath(const double &adp);
+
+                    /**
+                     * This method returns the traveled path (relative).
+                     *
+                     * @return Relatively driven path.
+                     */
+                    double getRelTraveledPath() const;
+
+                    /**
+                     * This method sets the traveled path (relative).
+                     *
+                     * @param rdp Relatively driven path.
+                     */
+                    void setRelTraveledPath(const double &rdp);
+
                     virtual ostream& operator<<(ostream &out) const;
                     virtual istream& operator>>(istream &in);
 
@@ -125,6 +153,8 @@ namespace core {
                     double m_v_log;
                     double m_v_batt;
                     double m_temp;
+                    double m_absTraveledPath;
+                    double m_relTraveledPath;
             };
 
         }

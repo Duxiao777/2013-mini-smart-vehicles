@@ -158,6 +158,7 @@ namespace vehicle {
         m_heading = fmod(m_heading, 2 * hesperia::data::Constants::PI);
 
         Point3 position(m_oldPosition.getX() + x, m_oldPosition.getY() + y, 0);
+        double relDrivenPath = (position - m_oldPosition).lengthXY();
         m_oldPosition = position;
 
         // Set velocity.
@@ -174,6 +175,8 @@ namespace vehicle {
         m_vehicleData.setV_batt(0);
         // For fake :-)
         m_vehicleData.setTemp(19.5 + cos(m_heading + m_deltaHeading/2.0));
+        m_vehicleData.setRelTraveledPath(relDrivenPath);
+        m_vehicleData.setAbsTraveledPath(m_vehicleData.getAbsTraveledPath() + relDrivenPath);
 
         m_previousTime = currentTime;
         return EgoState(position, m_orientation, velocity, acceleration);
