@@ -19,35 +19,62 @@ namespace hesperia {
             using namespace core::base;
 
             VehicleData::VehicleData() :
+                m_position(),
+                m_absTraveledPath(0),
+                m_relTraveledPath(0),
                 m_velocity(),
                 m_speed(0),
                 m_v_log(0),
                 m_v_batt(0),
-                m_temp(0),
-                m_absTraveledPath(0),
-                m_relTraveledPath(0) {}
+                m_temp(0) {}
 
             VehicleData::VehicleData(const VehicleData &obj) :
+                m_position(obj.m_position),
+                m_absTraveledPath(obj.m_absTraveledPath),
+                m_relTraveledPath(obj.m_relTraveledPath),
                 m_velocity(obj.m_velocity),
                 m_speed(obj.m_speed),
                 m_v_log(obj.m_v_log),
                 m_v_batt(obj.m_v_batt),
-                m_temp(obj.m_temp),
-                m_absTraveledPath(obj.m_absTraveledPath),
-                m_relTraveledPath(obj.m_relTraveledPath) {}
+                m_temp(obj.m_temp) {}
 
             VehicleData::~VehicleData() {}
 
             VehicleData& VehicleData::operator=(const VehicleData &obj) {
+                m_position = obj.m_position;
+                m_absTraveledPath = obj.m_absTraveledPath;
+                m_relTraveledPath = obj.m_relTraveledPath;
                 m_velocity = obj.m_velocity;
                 m_speed = obj.m_speed;
                 m_v_log = obj.m_v_log;
                 m_v_batt = obj.m_v_batt;
                 m_temp = obj.m_temp;
-                m_absTraveledPath = obj.m_absTraveledPath;
-                m_relTraveledPath = obj.m_relTraveledPath;
 
                 return (*this);
+            }
+
+            const Point3 VehicleData::getPosition() const {
+                return m_position;
+            }
+
+            void VehicleData::setPosition(const Point3 &p) {
+                m_position = p;
+            }
+
+            double VehicleData::getAbsTraveledPath() const {
+                return m_absTraveledPath;
+            }
+
+            void VehicleData::setAbsTraveledPath(const double &adp) {
+                m_absTraveledPath = adp;
+            }
+
+            double VehicleData::getRelTraveledPath() const {
+                return m_relTraveledPath;
+            }
+
+            void VehicleData::setRelTraveledPath(const double &rdp) {
+                m_relTraveledPath = rdp;
             }
 
             const Point3 VehicleData::getVelocity() const {
@@ -90,25 +117,9 @@ namespace hesperia {
                 m_temp = temp;
             }
 
-            double VehicleData::getAbsTraveledPath() const {
-                return m_absTraveledPath;
-            }
-
-            void VehicleData::setAbsTraveledPath(const double &adp) {
-                m_absTraveledPath = adp;
-            }
-
-            double VehicleData::getRelTraveledPath() const {
-                return m_relTraveledPath;
-            }
-
-            void VehicleData::setRelTraveledPath(const double &rdp) {
-                m_relTraveledPath = rdp;
-            }
-
             const string VehicleData::toString() const {
                 stringstream s;
-                s << "Velocity: " << m_velocity.toString() << ", speed: " << m_speed << ", V_log: " << m_v_log << ", V_batt: " << m_v_batt << ", temp: " << m_temp << ", abs: " << m_absTraveledPath << ", rel: " << m_relTraveledPath;
+                s << "Position:" << m_position.toString() << ", abs: " << m_absTraveledPath << ", rel: " << m_relTraveledPath << ", velocity: " << m_velocity.toString() << ", speed: " << m_speed << ", V_log: " << m_v_log << ", V_batt: " << m_v_batt << ", temp: " << m_temp;
                 return s.str();
             }
 
@@ -117,6 +128,15 @@ namespace hesperia {
                 SerializationFactory sf;
 
                 Serializer &s = sf.getSerializer(out);
+
+                s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL8('p', 'o', 's', 'i', 't', 'i', 'o', 'n') >::RESULT,
+                        m_position);
+
+                s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL3('a', 'd', 'p') >::RESULT,
+                        m_absTraveledPath);
+
+                s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL3('r', 'd', 'p') >::RESULT,
+                        m_relTraveledPath);
 
                 s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL8('v', 'e', 'l', 'o', 'c', 'i', 't', 'y') >::RESULT,
                         m_velocity);
@@ -133,12 +153,6 @@ namespace hesperia {
                 s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL4('t', 'e', 'm', 'p') >::RESULT,
                         m_temp);
 
-                s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL3('a', 'd', 'p') >::RESULT,
-                        m_absTraveledPath);
-
-                s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL3('r', 'd', 'p') >::RESULT,
-                        m_relTraveledPath);
-
                 return out;
             }
 
@@ -147,6 +161,15 @@ namespace hesperia {
                 SerializationFactory sf;
 
                 Deserializer &d = sf.getDeserializer(in);
+
+                d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL8('p', 'o', 's', 'i', 't', 'i', 'o', 'n') >::RESULT,
+                       m_position);
+
+                d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL3('a', 'd', 'p') >::RESULT,
+                       m_absTraveledPath);
+
+                d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL3('r', 'd', 'p') >::RESULT,
+                       m_relTraveledPath);
 
                 d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL8('v', 'e', 'l', 'o', 'c', 'i', 't', 'y') >::RESULT,
                        m_velocity);
@@ -162,12 +185,6 @@ namespace hesperia {
 
                 d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL4('t', 'e', 'm', 'p') >::RESULT,
                        m_temp);
-
-                d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL3('a', 'd', 'p') >::RESULT,
-                       m_absTraveledPath);
-
-                d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL3('r', 'd', 'p') >::RESULT,
-                       m_relTraveledPath);
 
                 return in;
             }

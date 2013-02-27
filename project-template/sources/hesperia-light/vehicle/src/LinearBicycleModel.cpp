@@ -169,6 +169,7 @@ namespace vehicle {
         Point3 acceleration;
 
         // Update internal data.
+        m_vehicleData.setPosition(position);
         m_vehicleData.setVelocity(velocity);
         m_vehicleData.setSpeed(m_speed * m_direction);
         m_vehicleData.setV_log(0);
