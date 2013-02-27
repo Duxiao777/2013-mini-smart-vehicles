@@ -25,6 +25,7 @@ namespace vehicle {
             virtual ~LinearBicycleModelNew();
 
             void accelerate(const double& value);
+            void speed(const double& value);
             void steer(const double& value);
 
             virtual hesperia::data::environment::EgoState computeEgoState();
@@ -37,6 +38,9 @@ namespace vehicle {
             double m_maxSteeringRightRad;
             int32_t m_invertedSteering;
             double m_maxSpeed;
+            bool m_useSpeedControl;
+            double m_esum;
+            double m_desiredSpeed;
             double m_desiredAcceleration;
             double m_desiredSteer;
             double m_speed;

@@ -54,7 +54,7 @@ namespace vehicle {
     }
 
     ModuleState::MODULE_EXITCODE Vehicle::runLinearBicycleModelNew() {
-        LinearBicycleModelNew lbm(getKeyValueConfiguration());
+        LinearBicycleModelNew lbmn(getKeyValueConfiguration());
 
         KeyValueDataStore &kvs = getKeyValueDataStore();
 
@@ -64,8 +64,9 @@ namespace vehicle {
             VehicleControl vc = c.getData<VehicleControl>();
             cerr << "VehicleControl: '" << vc.toString() << "'" << endl;
 
-        	lbm.accelerate(vc.getAcceleration());
-        	lbm.steer(vc.getSteeringWheelAngle());
+        	lbmn.speed(vc.getSpeed());
+        	lbmn.accelerate(vc.getAcceleration());
+        	lbmn.steer(vc.getSteeringWheelAngle());
 
             if (vc.getBrakeLights()) {
                 cout << "Turn ON brake lights." << endl;
@@ -79,10 +80,10 @@ namespace vehicle {
                 cout << "Turn ON right flashing lights." << endl;
             }
            
-            EgoState es = lbm.computeEgoState();
+            EgoState es = lbmn.computeEgoState();
             
             // Get vehicle data.
-            VehicleData vd = lbm.getVehicleData();
+            VehicleData vd = lbmn.getVehicleData();
             cerr << "VehicleData: '" << vd.toString() << "'" << endl;
 
             Container container(Container::EGOSTATE, es);

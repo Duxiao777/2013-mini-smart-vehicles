@@ -21,14 +21,16 @@ namespace core {
             using namespace core::base;
 
             VehicleControl::VehicleControl() :
-                    m_acceleration(),
-                    m_steeringWheelAngle(),
+                    m_speed(0),
+                    m_acceleration(0),
+                    m_steeringWheelAngle(0),
                     m_brakeLights(false),
                     m_flashingLightsLeft(false),
                     m_flashingLightsRight(false)
             {}
 
             VehicleControl::VehicleControl(const VehicleControl &obj) :
+                    m_speed(obj.getSpeed()),
                     m_acceleration(obj.getAcceleration()),
                     m_steeringWheelAngle(obj.getSteeringWheelAngle()),
                     m_brakeLights(obj.getBrakeLights()),
@@ -39,6 +41,7 @@ namespace core {
             VehicleControl::~VehicleControl() {}
 
             VehicleControl& VehicleControl::operator=(const VehicleControl &obj) {
+                setSpeed(obj.getSpeed());
                 setAcceleration(obj.getAcceleration());
                 setSteeringWheelAngle(obj.getSteeringWheelAngle());
                 setBrakeLights(obj.getBrakeLights());
@@ -46,6 +49,14 @@ namespace core {
                 setRightFlashingLights(obj.getRightFlashingLights());
 
                 return (*this);
+            }
+
+            double VehicleControl::getSpeed() const {
+                return m_speed;
+            }
+
+            void VehicleControl::setSpeed(const double &s) {
+                m_speed = s;
             }
 
             double VehicleControl::getAcceleration() const {
@@ -90,7 +101,7 @@ namespace core {
 
             const string VehicleControl::toString() const {
                 stringstream sstr;
-                sstr << "Acceleration: " << getAcceleration() << ", steering wheel angle: " << getSteeringWheelAngle() << ", brake lights: " << getBrakeLights() << ", flashingLightsLeft: " << getLeftFlashingLights() << ", flashingLightsRight: " << getRightFlashingLights();
+                sstr << "Speed: " << getSpeed() << ", acceleration: " << getAcceleration() << ", steering wheel angle: " << getSteeringWheelAngle() << ", brake lights: " << getBrakeLights() << ", flashingLightsLeft: " << getLeftFlashingLights() << ", flashingLightsRight: " << getRightFlashingLights();
                 return sstr.str();
             }
 
@@ -98,6 +109,9 @@ namespace core {
                 SerializationFactory sf;
 
                 Serializer &s = sf.getSerializer(out);
+
+                s.write(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL5('s', 'p', 'e', 'e', 'd') >::RESULT,
+                        m_speed);
 
                 s.write(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL5('a', 'c', 'c', 'e', 'l') >::RESULT,
                         m_acceleration);
@@ -121,6 +135,9 @@ namespace core {
                 SerializationFactory sf;
 
                 Deserializer &d = sf.getDeserializer(in);
+
+                d.read(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL5('s', 'p', 'e', 'e', 'd') >::RESULT,
+                       m_speed);
 
                 d.read(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL5('a', 'c', 'c', 'e', 'l') >::RESULT,
                        m_acceleration);

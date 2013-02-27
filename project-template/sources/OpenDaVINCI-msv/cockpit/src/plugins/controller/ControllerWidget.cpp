@@ -95,7 +95,7 @@ namespace cockpit {
                 QGroupBox *ControlGroup = new QGroupBox(tr("Vehicle control (you must click in this area to control by keyboard!)"));
                 QVBoxLayout *vehicleControlLayout = new QVBoxLayout();
 
-                QLabel *description = new QLabel(tr("up=accel., down=decel., left, right"));
+                QLabel *description = new QLabel(tr("w=accel., s=decel., up=inc speed, down=dec speed, left, right"));
                 vehicleControlLayout->addWidget(description);
                 m_value = new QLabel(m_vehicleControl.toString().c_str());
                 vehicleControlLayout->addWidget(m_value);
@@ -184,10 +184,28 @@ namespace cockpit {
 
             void ControllerWidget::keyPressEvent(QKeyEvent *evt) {
                 switch(evt->key()){
-                    case Qt::Key_Up:
+                    case Qt::Key_W:
                         {
                             Lock l2(m_vehicleControlMutex);
                             m_vehicleControl.setAcceleration(m_vehicleControl.getAcceleration() + 0.25);
+                            break;
+                        }
+                    case Qt::Key_S:
+                        {
+                            Lock l2(m_vehicleControlMutex);
+                            m_vehicleControl.setAcceleration(m_vehicleControl.getAcceleration() - 0.25);
+                            break;
+                        }
+                    case Qt::Key_Up:
+                        {
+                            Lock l2(m_vehicleControlMutex);
+                            m_vehicleControl.setSpeed(m_vehicleControl.getSpeed() + 0.5);
+                            break;
+                        }
+                    case Qt::Key_Down:
+                        {
+                            Lock l2(m_vehicleControlMutex);
+                            m_vehicleControl.setSpeed(m_vehicleControl.getSpeed() - 0.5);
                             break;
                         }
                     case Qt::Key_Left:
@@ -200,12 +218,6 @@ namespace cockpit {
                         {
                             Lock l2(m_vehicleControlMutex);
                             m_vehicleControl.setSteeringWheelAngle(m_vehicleControl.getSteeringWheelAngle() + 1*Constants::DEG2RAD);
-                            break;
-                        }
-                    case Qt::Key_Down:
-                        {
-                            Lock l2(m_vehicleControlMutex);
-                            m_vehicleControl.setAcceleration(m_vehicleControl.getAcceleration() - 0.25);
                             break;
                         }
                 }

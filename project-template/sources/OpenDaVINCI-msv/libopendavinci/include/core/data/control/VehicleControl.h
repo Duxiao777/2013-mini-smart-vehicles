@@ -43,6 +43,20 @@ namespace core {
                     VehicleControl& operator=(const VehicleControl &obj);
 
                     /**
+                     * This method returns the speed.
+                     *
+                     * @return Speed.
+                     */
+                    double getSpeed() const;
+
+                    /**
+                     * This method sets the speed.
+                     *
+                     * @param s Speed.
+                     */
+                    void setSpeed(const double &s);
+
+                    /**
                      * This method returns the acceleration.
                      *
                      * @return Acceleration.
@@ -57,7 +71,7 @@ namespace core {
                     void setAcceleration(const double &a);
 
                     /**
-                     * This method returns the steering wheel angle.
+                     * This method returns the steering wheel angle in RAD.
                      *
                      * @return Steering wheel angle.
                      */
@@ -118,6 +132,7 @@ namespace core {
                     virtual const std::string toString() const;
 
                 private:
+                    double m_speed;
                     double m_acceleration;
                     double m_steeringWheelAngle;
                     bool m_brakeLights;

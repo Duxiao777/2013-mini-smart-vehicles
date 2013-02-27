@@ -24,6 +24,9 @@ namespace vehicle {
         m_maxSteeringRightRad(0),
         m_invertedSteering(0),
         m_maxSpeed(0),
+        m_useSpeedControl(false),
+        m_esum(0),
+        m_desiredSpeed(0),
         m_desiredAcceleration(0),
         m_desiredSteer(0),
         m_speed(0),
@@ -53,7 +56,17 @@ namespace vehicle {
     LinearBicycleModelNew::~LinearBicycleModelNew() {}
 
     void LinearBicycleModelNew::accelerate(const double &a) {
+        if (fabs(m_desiredAcceleration - a) > 0) {
+//            m_useSpeedControl = false;
+        }
         m_desiredAcceleration = a;
+    }
+
+    void LinearBicycleModelNew::speed(const double &s) {
+//        if (fabs(m_desiredSpeed - s) > 0) {
+            m_useSpeedControl = true;
+//        }
+        m_desiredSpeed = s;
     }
 
     void LinearBicycleModelNew::steer(const double &s) {
@@ -84,6 +97,31 @@ namespace vehicle {
     EgoState LinearBicycleModelNew::computeEgoState() {
         TimeStamp currentTime;
         double timeStep = (currentTime.toMicroseconds() - m_previousTime.toMicroseconds()) / (1000.0 * 1000.0);
+
+        if (m_useSpeedControl) {
+            double e = (m_desiredSpeed - m_speed);
+            if (fabs(e) < 1e-2) {
+                m_esum = 0;
+            }
+            else {
+                m_esum += e;
+            }
+            const double Kp = 0.75;
+            const double Ki = 0.2;
+            const double p = Kp * e;
+            const double i = Ki * timeStep * m_esum;
+            const double y = p + i;
+            if (fabs(e) < 1e-2) {
+                m_desiredAcceleration = 0;
+            }
+            else {
+                m_desiredAcceleration = y;
+            }
+cerr << endl << endl << "PID y = " << y << endl;
+        }
+        else {
+            m_esum = 0;
+        }
 
         double m_deltaSpeed = m_desiredAcceleration * timeStep;
 

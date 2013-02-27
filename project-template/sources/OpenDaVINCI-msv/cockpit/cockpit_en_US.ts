@@ -174,8 +174,8 @@
     </message>
     <message>
         <location filename="src/plugins/controller/ControllerWidget.cpp" line="98"/>
-        <source>up=accel., down=decel., left, right</source>
-        <oldsource>w=increase brake, d=decrease brake, up=accel., down=decel., left, right</oldsource>
+        <source>w=accel., s=decel., up=inc speed, down=dec speed, left, right</source>
+        <oldsource>up=accel., down=decel., left, right</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
