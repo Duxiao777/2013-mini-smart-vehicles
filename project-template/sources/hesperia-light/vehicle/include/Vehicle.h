@@ -54,6 +54,10 @@ namespace vehicle {
             virtual void setUp();
 
             virtual void tearDown();
+
+            core::base::ModuleState::MODULE_EXITCODE runLinearBicycleModel();
+
+            core::base::ModuleState::MODULE_EXITCODE runLinearBicycleModelNew();
     };
 
 } // vehicle

@@ -17,7 +17,7 @@
 #include "core/data/TimeStamp.h"
 #include "core/io/ContainerConference.h"
 #include "core/io/ContainerListener.h"
-#include "core/data/control/ForceControl.h"
+#include "core/data/control/VehicleControl.h"
 
 #include "QtIncludes.h"
 
@@ -82,8 +82,8 @@ namespace cockpit {
 
                 private:
                     core::io::ContainerConference &m_conference;
-                    core::base::Mutex m_forceControlMutex;
-                    core::data::control::ForceControl m_forceControl;
+                    core::base::Mutex m_vehicleControlMutex;
+                    core::data::control::VehicleControl m_vehicleControl;
 
                     core::base::Mutex m_HzMutex;
                     uint32_t m_Hz;

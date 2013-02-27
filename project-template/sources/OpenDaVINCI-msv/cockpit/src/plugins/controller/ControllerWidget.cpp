@@ -12,6 +12,7 @@
 
 #include "core/base/Lock.h"
 #include "core/data/Container.h"
+#include "core/data/Constants.h"
 
 #include "QtIncludes.h"
 
@@ -32,8 +33,8 @@ namespace cockpit {
             ControllerWidget::ControllerWidget(const PlugIn &/*plugIn*/, const core::base::KeyValueConfiguration &/*kvc*/, ContainerConference &conf, QWidget *prnt) :
                 QWidget(prnt),
                 m_conference(conf),
-                m_forceControlMutex(),
-                m_forceControl(),
+                m_vehicleControlMutex(),
+                m_vehicleControl(),
                 m_HzMutex(),
                 m_Hz(10),
                 m_counter(0),
@@ -92,14 +93,14 @@ namespace cockpit {
 
                 // ForceControl text.
                 QGroupBox *ControlGroup = new QGroupBox(tr("Vehicle control (you must click in this area to control by keyboard!)"));
-                QVBoxLayout *forceControlLayout = new QVBoxLayout();
+                QVBoxLayout *vehicleControlLayout = new QVBoxLayout();
 
-                QLabel *description = new QLabel(tr("w=increase brake, d=decrease brake, up=accel., down=decel., left, right"));
-                forceControlLayout->addWidget(description);
-                m_value = new QLabel(m_forceControl.toString().c_str());
-                forceControlLayout->addWidget(m_value);
+                QLabel *description = new QLabel(tr("up=accel., down=decel., left, right"));
+                vehicleControlLayout->addWidget(description);
+                m_value = new QLabel(m_vehicleControl.toString().c_str());
+                vehicleControlLayout->addWidget(m_value);
 
-                ControlGroup->setLayout(forceControlLayout);
+                ControlGroup->setLayout(vehicleControlLayout);
 
                 // Combine frequency_LED and ForceControl text.
                 QVBoxLayout *frequency_LED_fc = new QVBoxLayout();
@@ -120,9 +121,9 @@ namespace cockpit {
             ControllerWidget::~ControllerWidget() {}
 
             void ControllerWidget::nextContainer(Container &container) {
-                if (container.getDataType() == Container::FORCECONTROL) {
-                    ForceControl fc = container.getData<ForceControl>();
-                    m_value->setText(fc.toString().c_str());
+                if (container.getDataType() == Container::VEHICLECONTROL) {
+                    VehicleControl vc = container.getData<VehicleControl>();
+                    m_value->setText(vc.toString().c_str());
                 }
             }
 
@@ -156,13 +157,13 @@ namespace cockpit {
                 Lock l(m_HzMutex);
                 
                 if (m_counter == (20/m_Hz) ) {
-                    Lock l2(m_forceControlMutex);
+                    Lock l2(m_vehicleControlMutex);
 
-                    m_forceControl.setBrakeLights(m_brakeLEDs->isChecked());
-                    m_forceControl.setLeftFlashingLights(m_leftTurningLEDs->isChecked());
-                    m_forceControl.setRightFlashingLights(m_rightTurningLEDs->isChecked());
+                    m_vehicleControl.setBrakeLights(m_brakeLEDs->isChecked());
+                    m_vehicleControl.setLeftFlashingLights(m_leftTurningLEDs->isChecked());
+                    m_vehicleControl.setRightFlashingLights(m_rightTurningLEDs->isChecked());
 
-                    Container c(Container::FORCECONTROL, m_forceControl);
+                    Container c(Container::VEHICLECONTROL, m_vehicleControl);
                     m_conference.send(c);
                     m_counter = 0;
                 }
@@ -185,38 +186,26 @@ namespace cockpit {
                 switch(evt->key()){
                     case Qt::Key_Up:
                         {
-                            Lock l2(m_forceControlMutex);
-                            m_forceControl.setAccelerationForce(m_forceControl.getAccelerationForce() + 0.1);
+                            Lock l2(m_vehicleControlMutex);
+                            m_vehicleControl.setAcceleration(m_vehicleControl.getAcceleration() + 0.25);
                             break;
                         }
                     case Qt::Key_Left:
                         {
-                            Lock l2(m_forceControlMutex);
-                            m_forceControl.setSteeringForce(m_forceControl.getSteeringForce() - 0.1);
+                            Lock l2(m_vehicleControlMutex);
+                            m_vehicleControl.setSteeringWheelAngle(m_vehicleControl.getSteeringWheelAngle() - 1*Constants::DEG2RAD);
                             break;
                         }
                     case Qt::Key_Right:
                         {
-                            Lock l2(m_forceControlMutex);
-                            m_forceControl.setSteeringForce(m_forceControl.getSteeringForce() + 0.1);
+                            Lock l2(m_vehicleControlMutex);
+                            m_vehicleControl.setSteeringWheelAngle(m_vehicleControl.getSteeringWheelAngle() + 1*Constants::DEG2RAD);
                             break;
                         }
                     case Qt::Key_Down:
                         {
-                            Lock l2(m_forceControlMutex);
-                            m_forceControl.setAccelerationForce(m_forceControl.getAccelerationForce() - 0.1);
-                            break;
-                        }
-                    case Qt::Key_W:
-                        {
-                            Lock l2(m_forceControlMutex);
-                            m_forceControl.setBrakeForce(m_forceControl.getBrakeForce() + 0.1);
-                            break;
-                        }
-                    case Qt::Key_S:
-                        {
-                            Lock l2(m_forceControlMutex);
-                            m_forceControl.setBrakeForce(m_forceControl.getBrakeForce() - 0.1);
+                            Lock l2(m_vehicleControlMutex);
+                            m_vehicleControl.setAcceleration(m_vehicleControl.getAcceleration() - 0.25);
                             break;
                         }
                 }

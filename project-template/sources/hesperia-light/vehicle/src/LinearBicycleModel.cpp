@@ -50,16 +50,16 @@ namespace vehicle {
         m_oldAcceleration(0,0,0),
         m_vehicleData()
     {
-        m_minimumTurningRadius = kvc.getValue<double>("Vehicle.minimumTurningRadius");
-        m_vehicleMass = kvc.getValue<double>("Vehicle.vehicleMass");
-        m_adherenceCoefficient = kvc.getValue<double>("Vehicle.adherenceCoefficient");
-        m_idleForce = kvc.getValue<double>("Vehicle.idleForce");
-        m_Ksteering = kvc.getValue<double>("Vehicle.Ksteering");
-        m_maximumSteeringRate = kvc.getValue<double>("Vehicle.maximumSteeringRate");
-        m_Kthrottle = kvc.getValue<double>("Vehicle.Kthrottle");
-        m_tauBrake = kvc.getValue<double>("Vehicle.tauBrake");
-        m_KstaticBrake = kvc.getValue<double>("Vehicle.KstaticBrake");
-        m_KdynamicBrake = kvc.getValue<double>("Vehicle.KdynamicBrake");
+        m_minimumTurningRadius = kvc.getValue<double>("Vehicle.LinearBicycleModel.minimumTurningRadius");
+        m_vehicleMass = kvc.getValue<double>("Vehicle.LinearBicycleModel.vehicleMass");
+        m_adherenceCoefficient = kvc.getValue<double>("Vehicle.LinearBicycleModel.adherenceCoefficient");
+        m_idleForce = kvc.getValue<double>("Vehicle.LinearBicycleModel.idleForce");
+        m_Ksteering = kvc.getValue<double>("Vehicle.LinearBicycleModel.Ksteering");
+        m_maximumSteeringRate = kvc.getValue<double>("Vehicle.LinearBicycleModel.maximumSteeringRate");
+        m_Kthrottle = kvc.getValue<double>("Vehicle.LinearBicycleModel.Kthrottle");
+        m_tauBrake = kvc.getValue<double>("Vehicle.LinearBicycleModel.tauBrake");
+        m_KstaticBrake = kvc.getValue<double>("Vehicle.LinearBicycleModel.KstaticBrake");
+        m_KdynamicBrake = kvc.getValue<double>("Vehicle.LinearBicycleModel.KdynamicBrake");
 
         // Stop the vehicle.
         m_vehicleDesiredResistiveEffortX = (m_idleForce/(m_KstaticBrake * m_tauBrake)) + 0.1;

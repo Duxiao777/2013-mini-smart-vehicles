@@ -13,6 +13,7 @@
 #include "hesperia/data/dmcp/DiscoverMessage.h"
 #include "hesperia/data/dmcp/ModuleStateMessage.h"
 #include "hesperia/data/dmcp/ModuleExitCodeMessage.h"
+#include "hesperia/data/control/VehicleControl.h"
 #include "hesperia/data/environment/EgoState.h"
 #include "hesperia/data/environment/Obstacle.h"
 #include "hesperia/data/environment/OtherVehicleState.h"
@@ -144,6 +145,8 @@ namespace plugins
         return container.getData<hesperia::data::image::SharedImage> ().toString();
       case Container::TIMESTAMP:
         return container.getData<core::data::TimeStamp> ().toString();
+      case Container::VEHICLECONTROL:
+        return container.getData<hesperia::data::control::VehicleControl> ().toString();
       default :
         cs << container;
         return cs.str();

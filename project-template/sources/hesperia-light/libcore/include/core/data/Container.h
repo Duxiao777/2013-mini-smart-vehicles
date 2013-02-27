@@ -54,6 +54,7 @@ namespace core {
                     ROUTE                        = 38,
                     VEHICLEDATA                  = 39,
                     DRAW_LINE                    = 40,
+                    VEHICLECONTROL               = 41,
 
                     USER_DATA_0                  = 1000,
                     USER_DATA_1                  = 1001,
