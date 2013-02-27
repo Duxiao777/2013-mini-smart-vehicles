@@ -14,11 +14,14 @@
 #include "core/base/KeyValueConfiguration.h"
 #include "core/base/Mutex.h"
 #include "core/data/Container.h"
+#include "core/data/TimeStamp.h"
 #include "core/io/ContainerConference.h"
 #include "core/io/ContainerListener.h"
 #include "core/data/control/ForceControl.h"
 
 #include "QtIncludes.h"
+
+#include "UserButtonData.h"
 
 #include "plugins/PlugIn.h"
 
@@ -74,6 +77,9 @@ namespace cockpit {
                     void TimerEvent();
                     void setHz(int v);
 
+                    void userButtonPressed();
+                    void userButtonReleased();
+
                 private:
                     core::io::ContainerConference &m_conference;
                     core::base::Mutex m_forceControlMutex;
@@ -87,6 +93,12 @@ namespace cockpit {
                     QCheckBox *m_brakeLEDs;
                     QCheckBox *m_leftTurningLEDs;
                     QCheckBox *m_rightTurningLEDs;
+
+                    core::base::Mutex m_userButtonMutex;
+                    QPushButton *m_userButton;
+                    core::data::TimeStamp m_userButtonPressedTS;
+                    bool m_userButtonPressed;
+                    msv::UserButtonData m_userButtonData;
             };
         }
     }

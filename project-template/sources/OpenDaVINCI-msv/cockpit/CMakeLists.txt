@@ -40,7 +40,7 @@ FILE(GLOB_RECURSE cockpit-headers "${CMAKE_CURRENT_SOURCE_DIR}/include" *.h)
 QT4_WRAP_CPP(cockpit-headers-moc ${cockpit-headers})
 
 # Recipe for building "cockpit".
-SET(MSVDATA ${CMAKE_CURRENT_SOURCE_DIR}/../msv/msv-data/src/SensorBoardData.cpp)
+FILE(GLOB_RECURSE MSVDATA "${CMAKE_CURRENT_SOURCE_DIR}/../msv/msv-data/src/*.cpp")
 
 FILE(GLOB_RECURSE cockpit-sources "${CMAKE_CURRENT_SOURCE_DIR}/src" *.cpp)
 

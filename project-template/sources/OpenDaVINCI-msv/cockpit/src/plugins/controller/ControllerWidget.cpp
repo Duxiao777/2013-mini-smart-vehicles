@@ -40,7 +40,12 @@ namespace cockpit {
                 m_value(NULL),
                 m_brakeLEDs(NULL),
                 m_leftTurningLEDs(NULL),
-                m_rightTurningLEDs(NULL) {
+                m_rightTurningLEDs(NULL),
+                m_userButtonMutex(),
+                m_userButton(NULL),
+                m_userButtonPressedTS(),
+                m_userButtonPressed(false),
+                m_userButtonData() {
 
                 // Set size.
                 setMinimumSize(640, 480);
@@ -66,8 +71,15 @@ namespace cockpit {
                 m_brakeLEDs = new QCheckBox(tr("Brake LEDs"));
                 m_leftTurningLEDs = new QCheckBox(tr("Left flashing LEDs"));
                 m_rightTurningLEDs = new QCheckBox(tr("Right flashing LEDs"));
+                
+                m_userButton = new QPushButton(tr("UserButton"));
+                connect(m_userButton, SIGNAL(pressed()),this, SLOT(userButtonPressed()));
+                connect(m_userButton, SIGNAL(released()),this, SLOT(userButtonReleased()));
+                m_userButtonData.setButtonStatus(msv::UserButtonData::RELEASED);
+                m_userButtonData.setDuration(0);
 
                 QVBoxLayout *LEDselectorLayout = new QVBoxLayout();
+                LEDselectorLayout->addWidget(m_userButton);
                 LEDselectorLayout->addWidget(m_brakeLEDs);
                 LEDselectorLayout->addWidget(m_leftTurningLEDs);
                 LEDselectorLayout->addWidget(m_rightTurningLEDs);
@@ -112,6 +124,32 @@ namespace cockpit {
                     ForceControl fc = container.getData<ForceControl>();
                     m_value->setText(fc.toString().c_str());
                 }
+            }
+
+            void ControllerWidget::userButtonPressed() {
+                Lock l(m_userButtonMutex);
+                if (!m_userButtonPressed) {
+                    m_userButtonPressed = true;
+                    m_userButtonPressedTS = TimeStamp();
+
+                    m_userButtonData.setButtonStatus(msv::UserButtonData::PRESSED);
+                    m_userButtonData.setDuration(0);
+
+                    Container c(Container::USER_BUTTON, m_userButtonData);
+                    m_conference.send(c);
+                }
+            }
+
+            void ControllerWidget::userButtonReleased() {
+                Lock l(m_userButtonMutex);
+                m_userButtonPressed = false;
+                TimeStamp now;
+                double duration = (now - m_userButtonPressedTS).toMicroseconds() / 1000000.0;
+
+                m_userButtonData.setButtonStatus(msv::UserButtonData::RELEASED);
+                m_userButtonData.setDuration(duration);
+                Container c(Container::USER_BUTTON, m_userButtonData);
+                m_conference.send(c);
             }
 
             void ControllerWidget::TimerEvent() {

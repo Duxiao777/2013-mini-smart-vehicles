@@ -43,6 +43,7 @@ namespace core {
                     FORCECONTROL                 = 33,
                     VEHICLEDATA                  = 39,
                     DRAW_LINE                    = 40,
+                    USER_BUTTON                  = 999,
                     USER_DATA_0                  = 1000,
                     USER_DATA_1                  = 1001,
                     USER_DATA_2                  = 1002,
