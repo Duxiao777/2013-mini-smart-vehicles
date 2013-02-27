@@ -23,16 +23,14 @@ namespace core {
                 m_speed(0),
                 m_v_log(0),
                 m_v_batt(0),
-                m_temp(0),
-                m_isSimulation(false) {}
+                m_temp(0) {}
 
             VehicleData::VehicleData(const VehicleData &obj) :
                 m_velocity(obj.m_velocity),
                 m_speed(obj.m_speed),
                 m_v_log(obj.m_v_log),
                 m_v_batt(obj.m_v_batt),
-                m_temp(obj.m_temp),
-                m_isSimulation(obj.m_isSimulation) {}
+                m_temp(obj.m_temp) {}
 
             VehicleData::~VehicleData() {}
 
@@ -42,7 +40,6 @@ namespace core {
                 m_v_log = obj.m_v_log;
                 m_v_batt = obj.m_v_batt;
                 m_temp = obj.m_temp;
-                m_isSimulation = obj.m_isSimulation;
 
                 return (*this);
             }
@@ -87,17 +84,9 @@ namespace core {
                 m_temp = temp;
             }
 
-            bool VehicleData::isSimulation() const {
-                return m_isSimulation;
-            }
-
-            void VehicleData::setSimulation(const bool &s) {
-                m_isSimulation = s;
-            }
-
             const string VehicleData::toString() const {
                 stringstream s;
-                s << "Velocity: " << m_velocity.toString() << ", speed: " << m_speed << ", V_log: " << m_v_log << ", V_batt: " << m_v_batt << ", temp: " << m_temp << ", simulation = " << m_isSimulation;
+                s << "Velocity: " << m_velocity.toString() << ", speed: " << m_speed << ", V_log: " << m_v_log << ", V_batt: " << m_v_batt << ", temp: " << m_temp;
                 return s.str();
             }
 
@@ -122,9 +111,6 @@ namespace core {
                 s.write(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL4('t', 'e', 'm', 'p') >::RESULT,
                         m_temp);
 
-                s.write(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL3('s', 'i', 'm') >::RESULT,
-                        m_isSimulation);
-
                 return out;
             }
 
@@ -148,9 +134,6 @@ namespace core {
 
                 d.read(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL4('t', 'e', 'm', 'p') >::RESULT,
                        m_temp);
-
-                d.read(CRC32 < OPENDAVINCI_CORE_STRINGLITERAL3('s', 'i', 'm') >::RESULT,
-                       m_isSimulation);
 
                 return in;
             }

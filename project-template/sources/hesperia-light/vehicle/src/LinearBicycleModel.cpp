@@ -174,7 +174,6 @@ namespace vehicle {
         m_vehicleData.setV_batt(0);
         // For fake :-)
         m_vehicleData.setTemp(19.5 + cos(m_heading + m_deltaHeading/2.0));
-        m_vehicleData.setSimulation(true);
 
         m_previousTime = currentTime;
         return EgoState(position, m_orientation, velocity, acceleration);

@@ -114,18 +114,6 @@ namespace core {
                      */
                     void setTemp(const double &temp);
 
-                    /**
-                     * @return true if we run in simulation mode.
-                     */
-                    bool isSimulation() const;
-
-                    /**
-                     * This method sets simulation mode.
-                     *
-                     * @param s true if we run in simulation mode.
-                     */
-                    void setSimulation(const bool &s);
-
                     virtual ostream& operator<<(ostream &out) const;
                     virtual istream& operator>>(istream &in);
 
@@ -137,7 +125,6 @@ namespace core {
                     double m_v_log;
                     double m_v_batt;
                     double m_temp;
-                    bool m_isSimulation;
             };
 
         }
