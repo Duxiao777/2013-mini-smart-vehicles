@@ -42,19 +42,19 @@ namespace vehicle {
         string model = getKeyValueConfiguration().getValue<string>("Vehicle.model");
 
         if (model == "LinearBicycleModelNew") {
-            cerr << "Using linearbicyclemodelnew" << endl;
+            cerr << "Using LinearBicycleModelNew" << endl;
 
-            return runLinearBicycleModelNew();
+            bool withSpeedController = (getKeyValueConfiguration().getValue<int32_t>("Vehicle.LinearBicycleModelNew.withSpeedController") == 1);
+
+            return runLinearBicycleModelNew(withSpeedController);
         }
-//        if (model == "LinearBicycleModel") {
-            cerr << "Using linearbicyclemodel" << endl;
 
-            return runLinearBicycleModel();
-//        }
+        cerr << "Using LinearBicycleModel" << endl;
+        return runLinearBicycleModel();
     }
 
-    ModuleState::MODULE_EXITCODE Vehicle::runLinearBicycleModelNew() {
-        LinearBicycleModelNew lbmn(getKeyValueConfiguration());
+    ModuleState::MODULE_EXITCODE Vehicle::runLinearBicycleModelNew(const bool &withSpeedController) {
+        LinearBicycleModelNew lbmn(getKeyValueConfiguration(), withSpeedController);
 
         KeyValueDataStore &kvs = getKeyValueDataStore();
 
@@ -64,8 +64,12 @@ namespace vehicle {
             VehicleControl vc = c.getData<VehicleControl>();
             cerr << "VehicleControl: '" << vc.toString() << "'" << endl;
 
-        	lbmn.speed(vc.getSpeed());
-        	lbmn.accelerate(vc.getAcceleration());
+            if (withSpeedController) {
+            	lbmn.speed(vc.getSpeed());
+            }
+            else {
+            	lbmn.accelerate(vc.getAcceleration());
+            }
         	lbmn.steer(vc.getSteeringWheelAngle());
 
             if (vc.getBrakeLights()) {

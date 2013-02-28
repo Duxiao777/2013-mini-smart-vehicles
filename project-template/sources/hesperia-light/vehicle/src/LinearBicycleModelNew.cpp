@@ -18,13 +18,13 @@ namespace vehicle {
     using namespace hesperia::data;
     using namespace hesperia::data::environment;
 
-    LinearBicycleModelNew::LinearBicycleModelNew(const KeyValueConfiguration &kvc) :
+    LinearBicycleModelNew::LinearBicycleModelNew(const KeyValueConfiguration &kvc, const bool &useSpeedController) :
         m_wheelbase(1),
         m_maxSteeringLeftRad(0),
         m_maxSteeringRightRad(0),
         m_invertedSteering(0),
         m_maxSpeed(0),
-        m_useSpeedControl(false),
+        m_useSpeedControl(useSpeedController),
         m_esum(0),
         m_desiredSpeed(0),
         m_desiredAcceleration(0),
@@ -56,16 +56,10 @@ namespace vehicle {
     LinearBicycleModelNew::~LinearBicycleModelNew() {}
 
     void LinearBicycleModelNew::accelerate(const double &a) {
-        if (fabs(m_desiredAcceleration - a) > 0) {
-//            m_useSpeedControl = false;
-        }
         m_desiredAcceleration = a;
     }
 
     void LinearBicycleModelNew::speed(const double &s) {
-//        if (fabs(m_desiredSpeed - s) > 0) {
-            m_useSpeedControl = true;
-//        }
         m_desiredSpeed = s;
     }
 
@@ -117,7 +111,7 @@ namespace vehicle {
             else {
                 m_desiredAcceleration = y;
             }
-cerr << endl << endl << "PID y = " << y << endl;
+            cerr << endl << endl << "PID y = " << y << endl;
         }
         else {
             m_esum = 0;
@@ -131,7 +125,6 @@ cerr << endl << endl << "PID y = " << y << endl;
 
         const double direction = (m_speed < 0) ? -1 : +1; // +1 = forwards, -1 = backwards
 
-//        double m_deltaHeading = fabs(m_speed)/m_wheelbase * tan(m_invertedSteering * direction * m_desiredSteer) * timeStep;
         double m_deltaHeading = fabs(m_speed)/m_wheelbase * tan(m_invertedSteering * direction * m_desiredSteer) * timeStep;
 
         m_orientation = Point3(1, 0, 0);

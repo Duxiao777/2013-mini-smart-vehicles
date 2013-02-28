@@ -57,7 +57,7 @@ namespace vehicle {
 
             core::base::ModuleState::MODULE_EXITCODE runLinearBicycleModel();
 
-            core::base::ModuleState::MODULE_EXITCODE runLinearBicycleModelNew();
+            core::base::ModuleState::MODULE_EXITCODE runLinearBicycleModelNew(const bool &withSpeedController);
     };
 
 } // vehicle

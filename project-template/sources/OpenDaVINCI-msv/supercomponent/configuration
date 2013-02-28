@@ -17,6 +17,7 @@
 #
 global.car = ../../Scenarios/Models/FordEscape.objx
 global.scenario = file://../../Scenarios/NoObstacles_NoStopLines.scnx
+global.showGrid = 0
 
 
 #
@@ -243,14 +244,21 @@ proxy.sensor5.clampDistance = 0.4           # Any distances greater than this di
 Vehicle.posX = 0                     # Initial position X in cartesian coordinates.
 Vehicle.posY = 0                     # Initial position Y in cartesian coordinates.
 Vehicle.headingDEG = 90
-Vehicle.minimumTurningRadius=4.24    # Minimum turning radius in m.
-Vehicle.vehicleMass=1700.0           # Mass in kg.
-Vehicle.adherenceCoefficient=100.0   # N per MPS (squared).
-Vehicle.idleForce=200.0              # Force if vehicle is in idle (no gear) in N.
-Vehicle.Ksteering=2.0
-Vehicle.maximumSteeringRate=50.0
-Vehicle.Kthrottle=40.0
-Vehicle.tauBrake=1.0
-Vehicle.KstaticBrake=100.0
-Vehicle.KdynamicBrake=60.0
+Vehicle.model=LinearBicycleModelNew  # Which motion model to be used: LinearBicycleModelNew or LinearBicycleModel.
+Vehicle.LinearBicycleModelNew.withSpeedController=1          # iff 1: use the VehicleControl.m_speed field; otherwise, ignore m_speed and use VehicleControl.m_acceleration field
+Vehicle.LinearBicycleModelNew.minimumTurningRadiusLeft=4.85  # Minimum turning radius to the left (for calculating maximum steering angle to the left); Attention! we used data from the miniature vehicle Meili and thus, all values are scaled by factor 10 to be compatible with the simulation!
+Vehicle.LinearBicycleModelNew.minimumTurningRadiusRight=5.32 # Minimum turning radius to the right (for calculating maximum steering angle to the right); Attention! we used data from the miniature vehicle Meili and thus, all values are scaled by factor 10 to be compatible with the simulation!
+Vehicle.LinearBicycleModelNew.wheelbase=2.65                 # Wheelbase; Attention! we used data from the miniature vehicle Meili and thus, all values are scaled by factor 10 to be compatible with the simulation!
+Vehicle.LinearBicycleModelNew.invertedSteering=0             # iff 0: interpret neg. steering wheel angles as steering to the left; iff 1: otherwise
+Vehicle.LinearBicycleModelNew.maxSpeed=2.0                   # maxium speed in m/ss
+Vehicle.LinearBicycleModel.minimumTurningRadius=4.24    # Minimum turning radius in m.
+Vehicle.LinearBicycleModel.vehicleMass=1700.0           # Mass in kg.
+Vehicle.LinearBicycleModel.adherenceCoefficient=100.0   # N per MPS (squared).
+Vehicle.LinearBicycleModel.idleForce=200.0              # Force if vehicle is in idle (no gear) in N.
+Vehicle.LinearBicycleModel.Ksteering=2.0
+Vehicle.LinearBicycleModel.maximumSteeringRate=50.0
+Vehicle.LinearBicycleModel.Kthrottle=40.0
+Vehicle.LinearBicycleModel.tauBrake=1.0
+Vehicle.LinearBicycleModel.KstaticBrake=100.0
+Vehicle.LinearBicycleModel.KdynamicBrake=60.0
 

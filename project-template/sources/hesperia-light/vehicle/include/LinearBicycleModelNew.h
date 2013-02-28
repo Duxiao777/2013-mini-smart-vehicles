@@ -21,7 +21,7 @@ namespace vehicle {
 
     class LinearBicycleModelNew {
         public:
-            LinearBicycleModelNew(const core::base::KeyValueConfiguration &kvc);
+            LinearBicycleModelNew(const core::base::KeyValueConfiguration &kvc, const bool &useSpeedController);
             virtual ~LinearBicycleModelNew();
 
             void accelerate(const double& value);
