@@ -148,6 +148,7 @@ namespace vehicle {
 
         // Update internal data.
         m_vehicleData.setPosition(position);
+        m_vehicleData.setHeading(m_heading);
         m_vehicleData.setVelocity(velocity);
         m_vehicleData.setSpeed(m_speed);
         m_vehicleData.setV_log(0);

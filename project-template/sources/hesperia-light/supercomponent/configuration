@@ -189,16 +189,20 @@ recorder.remoteControl = 0 # 0 = no remote control, 1 = allowing remote control 
 #
 # CONFIGURATION FOR PROXY
 #
-proxy.debug = 1
+proxy.debug = 0
 proxy.host = 127.0.0.1
 proxy.port = 27800
 proxy.user_start_button_file = file:///sys/class/gpio/gpio113/value
-proxy.steering.center = 113;
-proxy.steering.min = 41;
-proxy.steering.max = 185;
-proxy.steering.invert = 1;
-proxy.acceleration.max = 2.0;
-proxy.acceleration.hysteresis = 15;
+proxy.GPIO_brakeLED_file = file:///sys/class/gpio/gpio39/value
+proxy.GPIO_turnLeftLED_file = file:///sys/class/gpio/gpio140/value
+proxy.GPIO_turnRightLED_file = file:///sys/class/gpio/gpio138/value
+proxy.parking.us_id = 4; // Which ultra sonic ID shall be used for parking algorithm.
+proxy.steering.offset = 132; // Correct steering offset to drive straight.
+proxy.speed.max = 2.0;
+proxy.minimumTurningRadiusLeft=4.85         # Minimum turning radius to the left (for calculating maximum steering angle to the left); Attention! we used data from the miniature vehicle Meili and thus, all values are scaled by factor 10 to be compatible with the simulation!
+proxy.minimumTurningRadiusRight=5.32        # Minimum turning radius to the right (for calculating maximum steering angle to the right); Attention! we used data from the miniature vehicle Meili and thus, all values are scaled by factor 10 to be compatible with the simulation!
+proxy.wheelbase=2.65                        # Wheelbase; Attention! we used data from the miniature vehicle Meili and thus, all values are scaled by factor 10 to be compatible with the simulation!
+proxy.invertedSteering=0                    # iff 0: interpret neg. steering wheel angles as steering to the left; iff 1: otherwise
 
 proxy.numberOfSensors = 6                   # Number of configured sensors.
 

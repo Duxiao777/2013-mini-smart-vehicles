@@ -58,6 +58,20 @@ namespace hesperia {
                     void setPosition(const Point3 &position);
 
                     /**
+                     * This method returns the heading.
+                     *
+                     * @return Heading.
+                     */
+                    double getHeading() const;
+
+                    /**
+                     * This method sets the heading.
+                     *
+                     * @param h Heading.
+                     */
+                    void setHeading(const double &h);
+
+                    /**
                      * This method returns the traveled path (absolute).
                      *
                      * @return Absolutely driven path.
@@ -161,6 +175,7 @@ namespace hesperia {
 
                 private:
                     Point3 m_position;
+                    double m_heading;
                     double m_absTraveledPath;
                     double m_relTraveledPath;
                     Point3 m_velocity;

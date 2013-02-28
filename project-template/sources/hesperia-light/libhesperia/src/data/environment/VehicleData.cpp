@@ -20,6 +20,7 @@ namespace hesperia {
 
             VehicleData::VehicleData() :
                 m_position(),
+                m_heading(0),
                 m_absTraveledPath(0),
                 m_relTraveledPath(0),
                 m_velocity(),
@@ -30,6 +31,7 @@ namespace hesperia {
 
             VehicleData::VehicleData(const VehicleData &obj) :
                 m_position(obj.m_position),
+                m_heading(obj.m_heading),
                 m_absTraveledPath(obj.m_absTraveledPath),
                 m_relTraveledPath(obj.m_relTraveledPath),
                 m_velocity(obj.m_velocity),
@@ -42,6 +44,7 @@ namespace hesperia {
 
             VehicleData& VehicleData::operator=(const VehicleData &obj) {
                 m_position = obj.m_position;
+                m_heading = obj.m_heading;
                 m_absTraveledPath = obj.m_absTraveledPath;
                 m_relTraveledPath = obj.m_relTraveledPath;
                 m_velocity = obj.m_velocity;
@@ -59,6 +62,14 @@ namespace hesperia {
 
             void VehicleData::setPosition(const Point3 &p) {
                 m_position = p;
+            }
+
+            double VehicleData::getHeading() const {
+                return m_heading;
+            }
+
+            void VehicleData::setHeading(const double &h) {
+                m_heading = h;
             }
 
             double VehicleData::getAbsTraveledPath() const {
@@ -119,7 +130,7 @@ namespace hesperia {
 
             const string VehicleData::toString() const {
                 stringstream s;
-                s << "Position:" << m_position.toString() << ", abs: " << m_absTraveledPath << ", rel: " << m_relTraveledPath << ", velocity: " << m_velocity.toString() << ", speed: " << m_speed << ", V_log: " << m_v_log << ", V_batt: " << m_v_batt << ", temp: " << m_temp;
+                s << "Position:" << m_position.toString() << ", heading: " << m_heading << ", abs: " << m_absTraveledPath << ", rel: " << m_relTraveledPath << ", velocity: " << m_velocity.toString() << ", speed: " << m_speed << ", V_log: " << m_v_log << ", V_batt: " << m_v_batt << ", temp: " << m_temp;
                 return s.str();
             }
 
@@ -131,6 +142,9 @@ namespace hesperia {
 
                 s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL8('p', 'o', 's', 'i', 't', 'i', 'o', 'n') >::RESULT,
                         m_position);
+
+                s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL7('h', 'e', 'a', 'd', 'i', 'n', 'g') >::RESULT,
+                        m_heading);
 
                 s.write(CRC32 < HESPERIA_CORE_STRINGLITERAL3('a', 'd', 'p') >::RESULT,
                         m_absTraveledPath);
@@ -164,6 +178,9 @@ namespace hesperia {
 
                 d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL8('p', 'o', 's', 'i', 't', 'i', 'o', 'n') >::RESULT,
                        m_position);
+
+                d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL7('h', 'e', 'a', 'd', 'i', 'n', 'g') >::RESULT,
+                       m_heading);
 
                 d.read(CRC32 < HESPERIA_CORE_STRINGLITERAL3('a', 'd', 'p') >::RESULT,
                        m_absTraveledPath);

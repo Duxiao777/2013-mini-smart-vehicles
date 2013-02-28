@@ -10,10 +10,13 @@
 #include <map>
 
 #include "core/base/ConferenceClientModule.h"
+#include "core/base/Mutex.h"
+#include "core/data/environment/VehicleData.h"
 #include "core/wrapper/StringListener.h"
 
 #include "PointSensor.h"
 #include "SensorBoardData.h"
+#include "UserButtonData.h"
 
 namespace msv {
 
@@ -27,7 +30,14 @@ namespace msv {
             // Packets that only expect ack
             enum CAR_NORES_PACKET_ID {
                 CAR_PACKET_SET_POWER_SERVO = 0,
-                CAR_PACKET_WRITE_POS
+                CAR_PACKET_WRITE_POS,
+                CAR_PACKET_ADD_POINT,
+                CAR_PACKET_AP_RUN,
+                CAR_PACKET_AP_CLEAR,
+                CAR_PACKET_RESET_TRAVEL_CNT,
+                CAR_PACKET_SET_LIMITED,
+                CAR_PACKET_FULL_BRAKE,
+                CAR_PACKET_SERVO_OFFSET
             };
 
             // Packets that expect response
@@ -36,6 +46,7 @@ namespace msv {
                 CAR_PACKET_READ_POS,
                 CAR_PACKET_READ_SENS_ULTRA,
                 CAR_PACKET_READ_SENS_IR,
+                CAR_PACKET_READ_TRAVEL_COUNTER,
                 CAR_PACKET_PING,
                 CAR_PACKET_ACK2 = 254
             };
@@ -93,7 +104,7 @@ namespace msv {
              * @param dir Steering information.
              * @return payload part of the packet to be sent to UDP_Server.
              */
-            string createPayloadForSettingAccelerationAndSteering(const uint16_t &speed, const uint8_t &direction) const;
+            string createPayloadForSettingAccelerationAndSteering(const double &speed, const uint8_t &direction) const;
 
             string createPayloadForQueryOnboardData() const;
 
@@ -102,6 +113,29 @@ namespace msv {
             string createPayloadForQueryInfraRedData() const;
 
             string createPayloadForQueryPositionData() const;
+
+            /**
+             * This method resets the current position data (just "set" the given position so the car thinks it is at the given position).
+             *
+             * @param x absolute position x in mm. 
+             * @param y absolute position y in mm.
+             * @param heading absolute heading.
+             */ 
+            string createPayloadForWritePos(const double &x, const double &y, const double &heading) const;
+
+            string createPayloadForAddPosition(const double &x, const double &y, const double &speed) const;
+
+            string createPayloadForReadTravelCounter(const bool &isAbs) const;
+
+            string createPayloadForRunAP(const bool &run) const;
+
+            string createPayloadForClearAP() const;
+
+            string createPayloadForResetTravelCounter() const;
+
+            string createPayloadForFullBrake() const;
+ 
+            string createPayloadForServoOffset(const uint32_t &offset) const;
 
             /**
              * This method creates the outer frame (CRC16 checksum).
@@ -115,7 +149,17 @@ namespace msv {
 
         private:
             map<uint16_t, PointSensor*> m_mapOfPointSensors;
+            
+            core::base::Mutex m_userButtonMutex;
+            UserButtonData m_userButtonData;
+            
+            core::base::Mutex m_sensorBoardMutex;
             SensorBoardData m_sensorBoardData;
+
+            core::base::Mutex m_vehicleDataMutex;
+            core::data::environment::VehicleData m_vehicleData;
+
+            uint32_t m_steeringOffset;
             bool m_debug;
     };
 
