@@ -133,49 +133,60 @@
 <context>
     <name>ControllerWidget</name>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="55"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="58"/>
         <source>Runtime frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="57"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="60"/>
         <source>Runtime frequency [Hz]: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="70"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="73"/>
         <source>Vehicle&apos;s LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="72"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="75"/>
         <source>Brake LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="73"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="76"/>
         <source>Left flashing LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="74"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="77"/>
         <source>Right flashing LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="76"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="79"/>
         <source>UserButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="95"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="85"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="171"/>
+        <source>NOT sending control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="102"/>
         <source>Vehicle control (you must click in this area to control by keyboard!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="98"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="105"/>
         <source>w=accel., s=decel., up=inc speed, down=dec speed, left, right</source>
         <oldsource>up=accel., down=decel., left, right</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="168"/>
+        <source>sending control</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

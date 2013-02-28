@@ -46,7 +46,10 @@ namespace cockpit {
                 m_userButton(NULL),
                 m_userButtonPressedTS(),
                 m_userButtonPressed(false),
-                m_userButtonData() {
+                m_userButtonData(),
+                m_sendVehicleControlDataMutex(),
+                m_sendVehicleControlData(false),
+                m_sendVehicleControlButton(NULL) {
 
                 // Set size.
                 setMinimumSize(640, 480);
@@ -79,8 +82,12 @@ namespace cockpit {
                 m_userButtonData.setButtonStatus(msv::UserButtonData::RELEASED);
                 m_userButtonData.setDuration(0);
 
+                m_sendVehicleControlButton = new QPushButton(tr("NOT sending control"));
+                connect(m_sendVehicleControlButton, SIGNAL(released()),this, SLOT(sendButtonReleased()));
+
                 QVBoxLayout *LEDselectorLayout = new QVBoxLayout();
                 LEDselectorLayout->addWidget(m_userButton);
+                LEDselectorLayout->addWidget(m_sendVehicleControlButton);
                 LEDselectorLayout->addWidget(m_brakeLEDs);
                 LEDselectorLayout->addWidget(m_leftTurningLEDs);
                 LEDselectorLayout->addWidget(m_rightTurningLEDs);
@@ -153,6 +160,18 @@ namespace cockpit {
                 m_conference.send(c);
             }
 
+            void ControllerWidget::sendButtonReleased() {
+                Lock l(m_sendVehicleControlDataMutex);
+                m_sendVehicleControlData = !m_sendVehicleControlData;
+
+                if (m_sendVehicleControlData) {
+                    m_sendVehicleControlButton->setText(tr("sending control"));
+                }
+                else {
+                    m_sendVehicleControlButton->setText(tr("NOT sending control"));
+                }
+            }
+
             void ControllerWidget::TimerEvent() {
                 Lock l(m_HzMutex);
                 
@@ -163,9 +182,15 @@ namespace cockpit {
                     m_vehicleControl.setLeftFlashingLights(m_leftTurningLEDs->isChecked());
                     m_vehicleControl.setRightFlashingLights(m_rightTurningLEDs->isChecked());
 
-                    Container c(Container::VEHICLECONTROL, m_vehicleControl);
-                    m_conference.send(c);
-                    m_counter = 0;
+                    {
+                        Lock l3(m_sendVehicleControlDataMutex);
+
+                        if (m_sendVehicleControlData) {
+                            Container c(Container::VEHICLECONTROL, m_vehicleControl);
+                            m_conference.send(c);
+                            m_counter = 0;
+                        }
+                    }
                 }
 
                 if (m_counter > (20/m_Hz)) {

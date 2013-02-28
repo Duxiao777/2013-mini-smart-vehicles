@@ -80,6 +80,8 @@ namespace cockpit {
                     void userButtonPressed();
                     void userButtonReleased();
 
+                    void sendButtonReleased();
+
                 private:
                     core::io::ContainerConference &m_conference;
                     core::base::Mutex m_vehicleControlMutex;
@@ -99,6 +101,10 @@ namespace cockpit {
                     core::data::TimeStamp m_userButtonPressedTS;
                     bool m_userButtonPressed;
                     msv::UserButtonData m_userButtonData;
+
+                    core::base::Mutex m_sendVehicleControlDataMutex;
+                    bool m_sendVehicleControlData;
+                    QPushButton *m_sendVehicleControlButton;
             };
         }
     }
