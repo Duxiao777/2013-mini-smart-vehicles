@@ -45,6 +45,62 @@ namespace core {
                     VehicleData& operator=(const VehicleData &obj);
 
                     /**
+                     * This method returns the current position (2D, estimated!).
+                     *
+                     * @return position.
+                     */
+                    const Point3 getPosition() const;
+
+                    /**
+                     * This method sets a position.
+                     *
+                     * @param p New position.
+                     */
+                    void setPosition(const Point3 &position);
+
+                    /**
+                     * This method returns the heading.
+                     *
+                     * @return Heading.
+                     */
+                    double getHeading() const;
+
+                    /**
+                     * This method sets the heading.
+                     *
+                     * @param h Heading.
+                     */
+                    void setHeading(const double &h);
+
+                    /**
+                     * This method returns the traveled path (absolute).
+                     *
+                     * @return Absolutely driven path.
+                     */
+                    double getAbsTraveledPath() const;
+
+                    /**
+                     * This method sets the traveled path (absolute).
+                     *
+                     * @param adp Absolutely driven path.
+                     */
+                    void setAbsTraveledPath(const double &adp);
+
+                    /**
+                     * This method returns the traveled path (relative).
+                     *
+                     * @return Relatively driven path.
+                     */
+                    double getRelTraveledPath() const;
+
+                    /**
+                     * This method sets the traveled path (relative).
+                     *
+                     * @param rdp Relatively driven path.
+                     */
+                    void setRelTraveledPath(const double &rdp);
+
+                    /**
                      * This method returns the current velocity.
                      *
                      * @return velocity.
@@ -71,7 +127,6 @@ namespace core {
                      * @param speed New speed.
                      */
                     void setSpeed(const double &speed);
-
                     /**
                      * This method returns v_log.
                      *
@@ -114,30 +169,21 @@ namespace core {
                      */
                     void setTemp(const double &temp);
 
-                    /**
-                     * @return true if we run in simulation mode.
-                     */
-                    bool isSimulation() const;
-
-                    /**
-                     * This method sets simulation mode.
-                     *
-                     * @param s true if we run in simulation mode.
-                     */
-                    void setSimulation(const bool &s);
-
                     virtual ostream& operator<<(ostream &out) const;
                     virtual istream& operator>>(istream &in);
 
                     virtual const string toString() const;
 
                 private:
+                    Point3 m_position;
+                    double m_heading;
+                    double m_absTraveledPath;
+                    double m_relTraveledPath;
                     Point3 m_velocity;
                     double m_speed;
                     double m_v_log;
                     double m_v_batt;
                     double m_temp;
-                    bool m_isSimulation;
             };
 
         }

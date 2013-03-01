@@ -26,6 +26,7 @@
 #include "core/data/SharedData.h"
 #include "core/data/TimeStamp.h"
 
+#include "UserButtonData.h"
 #include "plugins/spy/SpyWidget.h"
 
 namespace cockpit {
@@ -121,6 +122,8 @@ namespace cockpit {
                        return container.getData<core::data::image::SharedImage> ().toString();
                     case Container::TIMESTAMP:
                        return container.getData<core::data::TimeStamp> ().toString();
+                    case Container::USER_BUTTON:
+                       return container.getData<msv::UserButtonData> ().toString();
                     default :
                        cs << container;
                        return cs.str();

@@ -10,12 +10,13 @@
 #include <string>
 
 #include "core/macros.h"
-#include "core/base/FIFOQueue.h"
+#include "core/base/Lock.h"
+#include "core/base/LIFOQueue.h"
 #include "core/data/Container.h"
 #include "core/base/KeyValueConfiguration.h"
+#include "core/data/Constants.h"
 #include "core/data/TimeStamp.h"
-#include "core/data/control/ForceControl.h"
-#include "core/data/environment/VehicleData.h"
+#include "core/data/control/VehicleControl.h"
 #include "core/io/ContainerConference.h"
 #include "core/wrapper/UDPFactory.h"
 #include "core/wrapper/UDPSender.h"
@@ -24,7 +25,6 @@
 #include "core/io/URL.h"
 #include "core/exceptions/Exceptions.h"
 
-#include "SensorBoardData.h"
 #include "Proxy.h"
 
 namespace msv {
@@ -72,7 +72,13 @@ namespace msv {
     Proxy::Proxy(const int32_t &argc, char **argv) :
 	    ConferenceClientModule(argc, argv, "Proxy"),
         m_mapOfPointSensors(),
+        m_userButtonMutex(),
+        m_userButtonData(),
+        m_sensorBoardMutex(),
         m_sensorBoardData(),
+        m_vehicleDataMutex(),
+        m_vehicleData(),
+        m_steeringOffset(132),
         m_debug(false) {
     }
 
@@ -124,18 +130,126 @@ namespace msv {
         return strbuffer.str();
     }
 
-    string Proxy::createPayloadForSettingAccelerationAndSteering(const uint16_t &speed, const uint8_t &direction) const {
+    string Proxy::createPayloadForSettingAccelerationAndSteering(const double &speed, const uint8_t &direction) const {
         stringstream strbuffer;
         strbuffer << (char)CAR_PACKET_NORES;
         strbuffer << (char)CAR_PACKET_SET_POWER_SERVO;
 
-        uint16_t speed_int = speed;
+        int16_t speed_int = (int16_t)(speed * 100.0);
         
         strbuffer << (char)(speed_int >> 8);
         strbuffer << (char)(speed_int);
 
         uint8_t dir = direction;
         strbuffer << (char)(dir);
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForWritePos(const double &x, const double &y, const double &heading) const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_NORES;
+        strbuffer << (char)CAR_PACKET_WRITE_POS;
+
+        int32_t px = 0, py = 0;
+        int16_t alpha = 0;
+        double alpha_d = heading;
+
+        while (alpha_d > 2.0 * Constants::PI) {
+            alpha_d -= 2.0 * Constants::PI;
+        }
+
+        while (alpha_d < 0) {
+            alpha_d += 2.0 * Constants::PI;
+        }
+
+        px = (int32_t)x;
+        py = (int32_t)y;
+        alpha = (int16_t)(alpha_d * 10000.0);
+
+        strbuffer << ((char)(px >> 24));
+        strbuffer << ((char)(px >> 16));
+        strbuffer << ((char)(px >> 8));
+        strbuffer << ((char)px);
+
+        strbuffer << ((char)(py >> 24));
+        strbuffer << ((char)(py >> 16));
+        strbuffer << ((char)(py >> 8));
+        strbuffer << ((char)py);
+
+        strbuffer << ((char)(alpha >> 8));
+        strbuffer << ((char)alpha);
+
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForAddPosition(const double &x, const double &y, const double &speed) const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_NORES;
+        strbuffer << (char)CAR_PACKET_ADD_POINT;
+
+        int32_t px = 0, py = 0;
+        px = (int32_t)x;
+        py = (int32_t)y;
+
+        strbuffer << ((char)(px >> 24));
+        strbuffer << ((char)(px >> 16));
+        strbuffer << ((char)(px >> 8));
+        strbuffer << ((char)px);
+
+        strbuffer << ((char)(py >> 24));
+        strbuffer << ((char)(py >> 16));
+        strbuffer << ((char)(py >> 8));
+        strbuffer << ((char)py);
+
+        int16_t speed_int = (int16_t)(speed * 100.0);
+        strbuffer << (char)(speed_int >> 8);
+        strbuffer << (char)(speed_int);
+
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForReadTravelCounter(const bool &isAbs) const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_RES;
+        strbuffer << (char)CAR_PACKET_READ_TRAVEL_COUNTER;
+        strbuffer << (char)(isAbs ? 1 : 0);
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForRunAP(const bool &run) const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_NORES;
+        strbuffer << (char)CAR_PACKET_AP_RUN;
+        strbuffer << (char)(run ? 1 : 0);
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForClearAP() const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_NORES;
+        strbuffer << (char)CAR_PACKET_AP_CLEAR;
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForResetTravelCounter() const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_NORES;
+        strbuffer << (char)CAR_PACKET_RESET_TRAVEL_CNT;
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForFullBrake() const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_NORES;
+        strbuffer << (char)CAR_PACKET_FULL_BRAKE;
+        return strbuffer.str();
+    }
+
+    string Proxy::createPayloadForServoOffset(const uint32_t &offset) const {
+        stringstream strbuffer;
+        strbuffer << (char)CAR_PACKET_NORES;
+        strbuffer << (char)CAR_PACKET_SERVO_OFFSET;
+        strbuffer << (char)(offset);
         return strbuffer.str();
     }
 
@@ -181,56 +295,64 @@ namespace msv {
         bool packetTerminator = (*(data+len+2) == 3);
 
         if (m_debug) {
-//            cerr << "Proxy received '" << s << "', length = " << len << ", type: " << reply << ", validCRC: " << validCRC << ", packetTerminator: " << packetTerminator << endl;
+// cerr << "Proxy received '" << s << "', length = " << len << ", type: " << reply << ", validCRC: " << validCRC << ", packetTerminator: " << packetTerminator << endl;
         }
 
         if (validCRC && packetTerminator) {
             switch (reply) {
                 case CAR_PACKET_READ_VALUES:
                 {
+                    Lock l(m_vehicleDataMutex);
+
                     data++;
                     uint16_t i = 0;
 
-                    VehicleData vd;
-
                     uint16_t tmp_us = (uint16_t)data[i] << 8 | (uint16_t)data[i + 1];
                     i += 2;
-                    vd.setV_batt((double)tmp_us / 1000.0);
+                    m_vehicleData.setV_batt((double)tmp_us / 1000.0);
 
                     tmp_us = (uint16_t)data[i] << 8 | (uint16_t)data[i + 1];
                     i += 2;
-                    vd.setV_log((double)tmp_us / 1000.0);
+                    m_vehicleData.setV_log((double)tmp_us / 1000.0);
 
                     int16_t tmp_s = (int16_t)data[i] << 8 | (int16_t)data[i + 1];
                     i += 2;
-                    vd.setTemp((double)tmp_s / 1000.0);
+                    m_vehicleData.setTemp((double)tmp_s / 1000.0);
 
                     tmp_s = (int16_t)data[i] << 8 | (int16_t)data[i + 1];
                     i += 2;
-                    vd.setSpeed((double)tmp_s / 1000.0);
-
-                    Container c(Container::VEHICLEDATA, vd);
-                    getConference().send(c);
+                    m_vehicleData.setSpeed((double)tmp_s / 1000.0);
 
                     break;
                 }
 
                 case CAR_PACKET_READ_POS:
                 {
+                    Lock l(m_vehicleDataMutex);
+
                     data++;
                     uint16_t i = 0;
 
-                    double x = (double)((int32_t)data[i] << 24 | (int32_t)data[i + 1] << 16 | (int32_t)data[i + 2] << 8 | (int32_t)data[i + 3]);
+                    double x_car = (double)((int32_t)data[i] << 24 | (int32_t)data[i + 1] << 16 | (int32_t)data[i + 2] << 8 | (int32_t)data[i + 3]);
                     i += 4;
 
-                    double y = (double)((int32_t)data[i] << 24 | (int32_t)data[i + 1] << 16 | (int32_t)data[i + 2] << 8 | (int32_t)data[i + 3]);
+                    double y_car = (double)((int32_t)data[i] << 24 | (int32_t)data[i + 1] << 16 | (int32_t)data[i + 2] << 8 | (int32_t)data[i + 3]);
                     i += 4;
 
-                    double heading = (double)((uint16_t)data[i] << 8 | (uint16_t)data[i + 1]) / 10000.0;
+                    double heading_car = (double)((uint16_t)data[i] << 8 | (uint16_t)data[i + 1]) / 10000.0;
                     i += 2;
 
+                    // Motor Controller's coordinate system is not DIN 70000; Y-axis is straight forwards, X-axis is to the right.
+                    const double ROT_Z = 90 * Constants::DEG2RAD;
+                    Point3 pos(x_car / 1000.0, y_car / 1000.0, 0);
+                    pos.rotateZ(ROT_Z);
+                    double heading = heading_car + ROT_Z;
+
+                    m_vehicleData.setPosition(pos);
+                    m_vehicleData.setHeading(heading);
+
                     if (m_debug) {
-                        cout << "Position data: x=" << x << ", y=" << y << ", heading=" << heading << endl;
+                        cout << "Position data: x=" << x_car << ", y=" << y_car << ", heading=" << heading << endl;
                     }
 
                     break;
@@ -238,7 +360,8 @@ namespace msv {
 
                 case CAR_PACKET_READ_SENS_ULTRA:
                 {
-                    bool sensorBoardData_updated = false;
+                    Lock l(m_sensorBoardMutex);
+
                     data++;
                     uint16_t tmp_us = (len - 1) / 3;
 
@@ -267,35 +390,28 @@ namespace msv {
                             if (m_debug) {
                                 cerr << "Updated " << SENSOR_ID << " with " << distance << endl;
                             }
-                            sensorBoardData_updated = true;
                         }
                     }
-
-                    if (sensorBoardData_updated) {
-                        // Distribute SensorBoardData.
-
-                		// Create a container with user data Container::USER_DATA_0.
-                		Container c(Container::USER_DATA_0, m_sensorBoardData);
-
-                        // Send container.
-                        getConference().send(c);
-                    } 
 
                     break;
                 }
 
                 case CAR_PACKET_READ_SENS_IR:
                 {
-                    bool sensorBoardData_updated = false;
+                    Lock l(m_sensorBoardMutex);
+
                     data++;
                     uint16_t tmp_ir = (len - 1) / 2;
 
                     for (int i = 0; i < tmp_ir; i++) {
-                        uint8_t ir_address = (uint8_t)data[i];
-                        uint16_t ir_value = ((uint16_t)data[i * 2 + tmp_ir] << 8) | (uint16_t)data[i * 2 + tmp_ir + 1];
+                        uint8_t ir_address = i; // Just loop through the sensors.
+                        uint16_t ir_value = ((uint16_t)data[i * 2] << 8) | (uint16_t)data[i * 2 + 1];
+
+                        // Mapping because the values are inverted.
+                        double distance = 0.122 * pow(ir_value * 0.005, -0.975);
 
                         if (m_debug) {
-                            cout << "Infra red: " << (int)ir_address << ": " << ir_value << endl;
+                            cout << "Infra red: " << (int)ir_address << ": " << ir_value << ", mapped value [m]: " << distance << endl;
                         }
 
                         // Find address of this sensor.
@@ -305,7 +421,6 @@ namespace msv {
                             const uint16_t SENSOR_ID = m_mapOfPointSensors[ir_address]->getID();
 
                             // Check if we need to clamp the distance to -1.
-                            double distance = ir_value/100.0;
                             if (distance > m_mapOfPointSensors[ir_address]->getClampDistance()) {
                                 distance = -1;
                             }
@@ -315,19 +430,29 @@ namespace msv {
                             if (m_debug) {
                                 cerr << "Updated " << SENSOR_ID << " with " << distance << endl;
                             }
-                            sensorBoardData_updated = true;
                         }
                     }
 
-                    if (sensorBoardData_updated) {
-                        // Distribute SensorBoardData.
+                    break;
+                }
 
-                		// Create a container with user data Container::USER_DATA_0.
-                		Container c(Container::USER_DATA_0, m_sensorBoardData);
+                case CAR_PACKET_READ_TRAVEL_COUNTER:
+                {
+                    Lock l(m_vehicleDataMutex);
 
-                        // Send container.
-                        getConference().send(c);
-                    } 
+                    data++;
+                    uint16_t i = 0;
+
+                    double traveledDistance = (double)((int32_t)data[i] << 24 | (int32_t)data[i + 1] << 16 | (int32_t)data[i + 2] << 8 | (int32_t)data[i + 3]);
+                    i += 4;
+
+                    if (m_debug) {
+                        cout << "traveled distance = " << traveledDistance << endl;
+                    }
+
+                    const double relTraveledDistance = traveledDistance - m_vehicleData.getAbsTraveledPath();
+                    m_vehicleData.setAbsTraveledPath(traveledDistance);
+                    m_vehicleData.setRelTraveledPath(relTraveledDistance);
 
                     break;
                 }
@@ -353,15 +478,18 @@ namespace msv {
         const uint32_t server_port = kv.getValue<uint32_t>("proxy.port");
         const uint32_t client_port = server_port + 1;
 
-        const int32_t STEERING_CENTER = kv.getValue<int32_t>("proxy.steering.center");
-        const int32_t STEERING_MIN = kv.getValue<int32_t>("proxy.steering.min");
-        const int32_t STEERING_MAX = kv.getValue<int32_t>("proxy.steering.max");
-        const bool STEERING_INVERT = kv.getValue<int32_t>("proxy.steering.invert") == 1;
+        m_steeringOffset = kv.getValue<uint32_t>("proxy.steering.offset");
 
-//        const int32_t ACCELERATION_HYSTERESIS = kv.getValue<int32_t>("proxy.acceleration.hysteresis");
-//        const double ACCELERATION_MAX = kv.getValue<double>("proxy.acceleration.max");
+        const double WHEELBASE = kv.getValue<double>("proxy.wheelbase");
+        const double MAX_STEERING_LEFT_RAD = atan(WHEELBASE/kv.getValue<double>("proxy.minimumTurningRadiusLeft") );
+        const double MAX_STEERING_RIGHT_RAD = atan(WHEELBASE/kv.getValue<double>("proxy.minimumTurningRadiusRight"));
+        const bool INVERTED_STEERING = (kv.getValue<int32_t>("proxy.invertedSteering") != 0) ? true : false;
+        const double SPEED_MAX = kv.getValue<double>("proxy.speed.max");
 
         const string USER_START_BUTTON_FILE = kv.getValue<string>("proxy.user_start_button_file");
+        const string BRAKE_LED_FILE = kv.getValue<string>("proxy.GPIO_brakeLED_file");
+        const string TURN_LEFT_LED_FILE = kv.getValue<string>("proxy.GPIO_turnLeftLED_file");
+        const string TURN_RIGHT_LED_FILE = kv.getValue<string>("proxy.GPIO_turnRightLED_file");
 
         // Setup all point sensors.
         for (uint32_t i = 0; i < getKeyValueConfiguration().getValue<uint32_t>("proxy.numberOfSensors"); i++) {
@@ -406,50 +534,123 @@ namespace msv {
         // Start receiving.
         connectionFromUDPServer->start();
 
-        // Create FIFO data store to receive containers.
-	    core::base::FIFOQueue fifo;
-	    addDataStoreFor(fifo);
+        // Configure steering offset.
+        string payload = createPayloadForServoOffset(m_steeringOffset);
+        string packet = createPacket(payload);
+        connectionToUDPServer->send(packet);
 
-        string payload = "";
-        string packet = "";
+        // Create LIFO data store to receive containers.
+        core::base::LIFOQueue lifo;
+        addDataStoreFor(lifo);
 
         // The following lines are used to open the GPIO file specified in the configuration file to test if the user pressed the button to start.
         istream *in = NULL;
         const int16_t USER_START_BUTTON_PRESSED_VALUE = 0; // if the user pressed the button the value changes to 0.
-        bool start_data_transmission_to_vehicle = false;
+        bool userButtonAvailable = false;
+        bool userButtonPressed = false;
+        bool userButtonReleased = false;
+        bool userButtonPressedTS_set = false;
+        TimeStamp userButtonPressedTS;
+        TimeStamp userButtonReleasedTS;
+        double userButtonPressedDuration = 0;
+
         URL url_start_button_file(USER_START_BUTTON_FILE);
         try {
             in = &(StreamFactory::getInstance().getInputStream(url_start_button_file));
-        } catch(InvalidArgumentException &iae) {
-            // The specified user start button file could not be opened. Assuming that there is not such file available and start right ahead.
-            start_data_transmission_to_vehicle = true;
+            userButtonAvailable = true;
 
-            cerr << "(Proxy) warning: '" << iae.toString() << "'. Enabling direct pass-through: " << start_data_transmission_to_vehicle << endl;
+            m_userButtonData.setButtonStatus(UserButtonData::RELEASED);
+        }
+        catch(InvalidArgumentException &iae) {
+            // The specified user start button file could not be opened. Assuming that there is not such file available and start right ahead.
+            userButtonAvailable = false;
+
+            cerr << "(Proxy) warning: '" << iae.toString() << "': User button unavailable." << endl;
         }
 
-        // This counter switches between the various requests from the car.
-        uint32_t query_counter = 0;
+        // The following lines are used to open the GPIO file specified in the configuration file to control the brake LEDs.
+        ostream *outBrakeLED = NULL;
+        const string BRAKE_LED_OFF = "0"; // Value to turn off the brake LEDs.
+        const string BRAKE_LED_ON = "1"; // Value to turn off the brake LEDs.
+        URL url_brake_LED_file(BRAKE_LED_FILE);
+        try {
+            outBrakeLED = &(StreamFactory::getInstance().getOutputStream(url_brake_LED_file));
+        }
+        catch(InvalidArgumentException &iae) {
+            // The specified file could not be opened. Assuming that there is not such file available.
+            outBrakeLED = NULL;
 
-	    while (getModuleState() == ModuleState::RUNNING) {
-            // Try to wait for the "start" signal: The file "/sys/class/gpio/gpio138/value" is available and changes from 1 --> 0.
-            if (!start_data_transmission_to_vehicle) {
+            cerr << "(Proxy) warning: '" << iae.toString() << "': Brake LEDs unavailable." << endl;
+        }
+
+        // The following lines are used to open the GPIO file specified in the configuration file to control the left turning LEDs.
+        ostream *outTurnLeftLED = NULL;
+        const string TURN_LEFT_LED_OFF = "0"; // Value to turn off the turn left LEDs.
+        const string TURN_LEFT_LED_ON = "1"; // Value to turn off the turn left LEDs.
+        URL url_turn_left_LED_file(TURN_LEFT_LED_FILE);
+        try {
+            outTurnLeftLED = &(StreamFactory::getInstance().getOutputStream(url_turn_left_LED_file));
+        }
+        catch(InvalidArgumentException &iae) {
+            // The specified file could not be opened. Assuming that there is not such file available.
+            outTurnLeftLED = NULL;
+
+            cerr << "(Proxy) warning: '" << iae.toString() << "': Brake turning LEDs (left) unavailable." << endl;
+        }
+        uint32_t turnLeftLEDcounter = 0;
+        const uint32_t turnLeftLEDcounterMax = ((uint32_t)(getFrequency()) < 2 ? 2 : (uint32_t)(getFrequency()));
+
+        // The following lines are used to open the GPIO file specified in the configuration file to control the right turning LEDs.
+        ostream *outTurnRightLED = NULL;
+        const string TURN_RIGHT_LED_OFF = "0"; // Value to turn off the turn left LEDs.
+        const string TURN_RIGHT_LED_ON = "1"; // Value to turn off the turn left LEDs.
+        URL url_turn_right_LED_file(TURN_RIGHT_LED_FILE);
+        try {
+            outTurnRightLED = &(StreamFactory::getInstance().getOutputStream(url_turn_right_LED_file));
+        }
+        catch(InvalidArgumentException &iae) {
+            // The specified file could not be opened. Assuming that there is not such file available.
+            outTurnRightLED = NULL;
+
+            cerr << "(Proxy) warning: '" << iae.toString() << "': Brake turning LEDs (right) unavailable." << endl;
+        }
+        uint32_t turnRightLEDcounter = 0;
+        const uint32_t turnRightLEDcounterMax = ((uint32_t)(getFrequency()) < 2 ? 2 : (uint32_t)(getFrequency()));
+
+
+
+        while (getModuleState() == ModuleState::RUNNING) {
+            // Try to wait for the "start" signal: The file USER_START_BUTTON_FILE/value changes from 1 --> 0.
+            if (userButtonAvailable) {
                 if (in != NULL) {
                     if (in->good()) {
                         int16_t input;
                         *in >> input;
-                        if (m_debug) {
-                            cout << "Read '" << input << "': ";
-                        }
+                        if (userButtonPressed && (USER_START_BUTTON_PRESSED_VALUE != input)) {
+                            userButtonPressed = false;
+                            userButtonReleased = true;
 
-                        if (USER_START_BUTTON_PRESSED_VALUE == input) {
-                            start_data_transmission_to_vehicle = true;
+                            {
+                                Lock l(m_userButtonMutex);
+                                m_userButtonData.setButtonStatus(UserButtonData::RELEASED);
+                            }
+
                             if (m_debug) {
-                                cout << "button pressed!" << endl;
+                                cout << "button released!" << endl;
                             }
                         }
-                        else {
+
+                        if (!userButtonPressed && (USER_START_BUTTON_PRESSED_VALUE == input)) {
+                            userButtonPressed = true;
+                            userButtonReleased = false;
+
+                            {
+                                Lock l(m_userButtonMutex);
+                                m_userButtonData.setButtonStatus(UserButtonData::PRESSED);
+                            }
+
                             if (m_debug) {
-                                cout << "button still NOT pressed!" << endl;
+                                cout << "button pressed!" << endl;
                             }
                         }
                     }
@@ -458,168 +659,298 @@ namespace msv {
                     in->clear();
                     // Seek to the beginning of the input stream.
                     in->seekg(ios::beg);
+
+                    if (userButtonPressed && !userButtonReleased && !userButtonPressedTS_set) {
+                        userButtonPressedTS = TimeStamp();
+                        userButtonPressedTS_set = true;
+
+                        // Turn off the turn left LEDs.
+                        if (outTurnLeftLED != NULL) {
+                            *outTurnLeftLED << TURN_LEFT_LED_OFF << endl;
+                            outTurnLeftLED->flush();
+                        }
+                        // Turn off the turn right LEDs.
+                        if (outTurnRightLED != NULL) {
+                            *outTurnRightLED << TURN_RIGHT_LED_OFF << endl;
+                            outTurnRightLED->flush();
+                        }
+                        // Turn off the brake LEDs.
+                        if (outBrakeLED != NULL) {
+                            *outBrakeLED << BRAKE_LED_OFF << endl;
+                            outBrakeLED->flush();
+                        }
+                    }
+                    if (!userButtonPressed && userButtonReleased) {
+                        userButtonReleasedTS = TimeStamp();
+
+                        // Reset TS for button pressed.
+                        userButtonPressedTS_set = false;
+
+                        // Reset buttonReleased flag to measure again.
+                        userButtonReleased = false;
+
+                        userButtonPressedDuration = (userButtonReleasedTS - userButtonPressedTS).toMicroseconds() / 1000000.0;
+
+                        {
+                            Lock l(m_userButtonMutex);
+                            m_userButtonData.setDuration(userButtonPressedDuration);
+                            m_userButtonData.setButtonStatus(UserButtonData::RELEASED);
+                        }
+
+                        if (m_debug) {
+                            cerr << "User button pressed for " << userButtonPressedDuration << "s." << endl;
+                        }
+                    }
                 }
             }
 
-            // Regular data processing.
-		    while (!fifo.isEmpty()) {
-			    // Read next received container.
-			    Container con = fifo.leave();
-                
-                if (con.getDataType() == Container::FORCECONTROL) {
-                    // Translate to UDP_Server specific format.
-                    ForceControl fc = con.getData<ForceControl>();
-                    if (m_debug) {
-                        cout << "Received: " << fc.toString() << endl;
-                    }
+            bool foundData = false;
+            VehicleControl vc;
 
-                    // Check if we need to decorate ourselves with the LEDs.
-                    if (fc.getBrakeLights()) {
-                        if (m_debug) {
-                            cout << "Turn ON brake lights." << endl;
-                        }
-                    }
-                    else {
-                        if (m_debug) {
-                            cout << "Turn OFF brake lights." << endl;
-                        }
-                    }
+            // Regular data processing: try to find matching containers.
+            while (!lifo.isEmpty() && !foundData) {
+                // Read next received container.
+                Container con = lifo.pop();
 
-                    if (fc.getLeftFlashingLights()) {
-                        if (m_debug) {
-                            cout << "Turn ON left flashing lights." << endl;
-                        }
-                    }
-                    else {
-                        if (m_debug) {
-                            cout << "Turn OFF left flashing lights." << endl;
-                        }
-                    }
-
-                    if (fc.getRightFlashingLights()) {
-                        if (m_debug) {
-                            cout << "Turn ON right flashing lights." << endl;
-                        }
-                    }
-                    else {
-                        if (m_debug) {
-                            cout << "Turn OFF right flashing lights." << endl;
-                        }
-                    }
-
-                    // Transform data from ForceControl to UDP_Server packet data.
-                    // This is specific for the gulliver cars (1:8). The
-                    // steering servo will not be able to move from
-                    // 0 -255, but about STEERING_MIN - STEERING_MAX, center at STEERING_CENTER.
-                    // Also, the joystick gives values that would
-                    // invert the steering direction, thus the
-                    // (255 - STEERING_CENTER) for the center and the (255 - servo2)
-                    // when sending the value to the car.
-                    double steering = 0;
-
-                    // Transform fc.getSteeringForce() to -127 .. 127.
-                    if(fc.getSteeringForce()>0)
-                    {
-						steering =fc.getSteeringForce()*255/76 - 0.5;
-					}else if(fc.getSteeringForce()<0 ){
-						steering =fc.getSteeringForce()*255/76 + 0.5;
-					}
-					if(steering<-101){
-						steering = -100;
-					}
-
-                    steering = (steering * (STEERING_MAX - STEERING_MIN)) / 255.0;
-                    // In case of inverting the steering:
-                    if (STEERING_INVERT) {
-                        steering += (255 - STEERING_CENTER);
-                        steering = (255 - steering);
-                    }
-                    else {
-                        steering += STEERING_CENTER;
-                    }
-
-                    // Acceleration: -127 .. -1  : backwards
-                    //                  1 .. 127 : forwards
-
-                    // Transform fc.getBrakeForce() to 0 .. 127.
-                    double acceleration = (-fc.getBrakeForce() + 5 )*35/5;
-/*
-                    if (acceleration > 35) {
-                    	acceleration = 35;
-                    }
-                    if (acceleration < 0) {
-                    	acceleration = 0;
-                    }
-
-                    const double SIGN = (acceleration < 0) ? -1.0 : 1.0;
-                    if (fabs(acceleration) > ACCELERATION_HYSTERESIS) {
-                        acceleration = (fabs(acceleration) - ACCELERATION_HYSTERESIS) * SIGN;
-                    }
-                    else {
-                        acceleration = 0;
-                    }
-                    if (m_debug) {
-                        cout << "acceleration: " << acceleration << endl;	
-                    }
-
-                    double speed = (ACCELERATION_MAX * acceleration) / (127.0 - ACCELERATION_HYSTERESIS);
-*/
-
-                    double speed = 1;
-
-                    if (fabs(acceleration) < 5) {
-                        speed = 0;
-                    }
-
-                    // Create a sendable packet.
-                    payload = createPayloadForSettingAccelerationAndSteering((uint16_t)(speed * 100.0), (uint8_t)steering);
-                    packet = createPacket(payload);
-
-                    if (start_data_transmission_to_vehicle) {
-                        connectionToUDPServer->send(packet);
-                    }
+                if (con.getDataType() == Container::VEHICLECONTROL) {
+                    vc = con.getData<VehicleControl>();
+                    foundData = true;
                 }
-        	}
-
-            // Now, query values from the UDP_Server: one at a time.
-            query_counter++;
-            switch (query_counter) {
-                case 1:
-                    // Query values from the vehicle.
-                    payload = createPayloadForQueryOnboardData();
-                break;
-
-                case 2:
-                    // Query ultra sonic values from the vehicle.
-                    payload = createPayloadForQueryUltraSonicData();
-                break;
-
-                case 3:
-                    // Query infra red values from the vehicle.
-                    payload = createPayloadForQueryInfraRedData();
-                break;
-
-                case 4:
-                    // Query position data from the vehicle.
-                    payload = createPayloadForQueryPositionData();
-
-                    // Reset counter. This call must be carried out in the last case of this switch statement.
-                    query_counter = 0;
-                break;
-
-                default:
-                    query_counter = 0;
             }
 
-            // Send packet to car and wait for reply.
+            // Clear lifo for next cycle.
+            lifo.clear();
+
+            if (foundData) {
+                // Translate to UDP_Server specific format.
+                if (m_debug) {
+                    cout << "Received: " << vc.toString() << endl;
+                }
+
+                // Check if we need to decorate ourselves with the LEDs.
+                if (vc.getBrakeLights()) {
+                    if (m_debug) {
+                        cout << "Turn ON brake lights." << endl;
+                    }
+                    // Turn on the brake LEDs.
+                    if (outBrakeLED != NULL) {
+                        *outBrakeLED << BRAKE_LED_ON << endl;
+                        outBrakeLED->flush();
+                    }
+                }
+                else {
+                    if (m_debug) {
+                        cout << "Turn OFF brake lights." << endl;
+                    }
+                    // Turn off the brake LEDs.
+                    if (outBrakeLED != NULL) {
+                        *outBrakeLED << BRAKE_LED_OFF << endl;
+                        outBrakeLED->flush();
+                    }
+                }
+
+                if (vc.getLeftFlashingLights()) {
+                    if (turnLeftLEDcounter < (turnLeftLEDcounterMax/2)) {
+                        if (m_debug) {
+                            cout << "Left flashing OFF." << endl;
+                        }
+                        if (outTurnLeftLED != NULL) {
+                            *outTurnLeftLED << TURN_LEFT_LED_OFF << endl;
+                            outTurnLeftLED->flush();
+                        }
+                    }
+                    if (turnLeftLEDcounter >= (turnLeftLEDcounterMax/2)) {
+                        if (m_debug) {
+                            cout << "Left flashing ON." << endl;
+                        }
+                        if (outTurnLeftLED != NULL) {
+                            *outTurnLeftLED << TURN_LEFT_LED_ON << endl;
+                            outTurnLeftLED->flush();
+                        }
+                    }
+                    turnLeftLEDcounter++;
+                    turnLeftLEDcounter %= turnLeftLEDcounterMax;
+                }
+                else {
+                    if (m_debug) {
+                        cout << "Turn OFF left flashing lights." << endl;
+                    }
+                    // Turn off the left turn LEDs.
+                    if (outTurnLeftLED != NULL) {
+                        *outTurnLeftLED << TURN_LEFT_LED_OFF << endl;
+                        outTurnLeftLED->flush();
+                    }
+                    turnLeftLEDcounter = 0;
+                }
+
+                if (vc.getRightFlashingLights()) {
+                    if (turnRightLEDcounter < (turnRightLEDcounterMax/2)) {
+                        if (m_debug) {
+                            cout << "Right flashing OFF." << endl;
+                        }
+                        if (outTurnRightLED != NULL) {
+                            *outTurnRightLED << TURN_RIGHT_LED_OFF << endl;
+                            outTurnRightLED->flush();
+                        }
+                    }
+                    if (turnRightLEDcounter >= (turnRightLEDcounterMax/2)) {
+                        if (m_debug) {
+                            cout << "Right flashing ON." << endl;
+                        }
+                        if (outTurnRightLED != NULL) {
+                            *outTurnRightLED << TURN_RIGHT_LED_ON << endl;
+                            outTurnRightLED->flush();
+                        }
+                    }
+                    turnRightLEDcounter++;
+                    turnRightLEDcounter %= turnRightLEDcounterMax;
+                }
+                else {
+                    if (m_debug) {
+                        cout << "Turn OFF right flashing lights." << endl;
+                    }
+                    // Turn off the right turn LEDs.
+                    if (outTurnRightLED != NULL) {
+                        *outTurnRightLED << TURN_RIGHT_LED_OFF << endl;
+                        outTurnRightLED->flush();
+                    }
+                    turnRightLEDcounter = 0;
+                }
+
+
+                // Transform data from VehicleControl to UDP_Server packet data.
+                // Transform vc.getSteeringWheelAngle() (-MAX_STEERING_LEFT_RAD .. 0 (straight) .. MAX_STEERING_RIGHT_RAD (max right)) to +255 (max left) .. 127 (straight) .. 0 (max right) in the regular case
+                // Transform vc.getSteeringWheelAngle() (MAX_STEERING_LEFT_RAD .. 0 (straight) .. -MAX_STEERING_RIGHT_RAD (max right)) to +255 (max left) .. 127 (straight) .. 0 (max right) in the inverted case
+                double steering = 0;
+                if (fabs(vc.getSteeringWheelAngle()) < 1e-2) {
+                    // Straight forward.
+                    steering = 127;
+                }
+                else {
+                    if (!INVERTED_STEERING) {
+                        // Negative vc.getSteeringWheelAngle() == steer to the left.
+                        if (vc.getSteeringWheelAngle() < 0) {
+                            const double MAX_LEFT = 255;
+                            const double CENTER = 127;
+                            steering = CENTER - (vc.getSteeringWheelAngle() * ((MAX_LEFT-CENTER)/MAX_STEERING_LEFT_RAD));
+                            if (steering > MAX_LEFT) {
+                                steering = MAX_LEFT;
+                            }
+                            if (steering < CENTER) {
+                                steering = CENTER;
+                            }
+                        }
+                        else if (vc.getSteeringWheelAngle() > 0) {
+                            const double MAX_RIGHT = 0;
+                            const double CENTER = 127;
+                            steering = CENTER - (vc.getSteeringWheelAngle() * ((CENTER-MAX_RIGHT)/MAX_STEERING_RIGHT_RAD));
+                            if (steering < MAX_RIGHT) {
+                                steering = MAX_RIGHT;
+                            }
+                            if (steering > CENTER) {
+                                steering = CENTER;
+                            }
+                        }
+                    }
+                    else {
+                        // Negative vc.getSteeringWheelAngle() == steer to the right.
+                        if (vc.getSteeringWheelAngle() < 0) {
+                            const double MAX_RIGHT = 0;
+                            const double CENTER = 127;
+                            steering = CENTER + (vc.getSteeringWheelAngle() * ((CENTER-MAX_RIGHT)/MAX_STEERING_RIGHT_RAD));
+                            if (steering < MAX_RIGHT) {
+                                steering = MAX_RIGHT;
+                            }
+                            if (steering > CENTER) {
+                                steering = CENTER;
+                            }
+                        }
+                        else if (vc.getSteeringWheelAngle() > 0) {
+                            const double MAX_LEFT = 255;
+                            const double CENTER = 127;
+                            steering = CENTER + (vc.getSteeringWheelAngle() * ((MAX_LEFT-CENTER)/MAX_STEERING_LEFT_RAD));
+                            if (steering > MAX_LEFT) {
+                                steering = MAX_LEFT;
+                            }
+                            if (steering < CENTER) {
+                                steering = CENTER;
+                            }
+                        }
+                    }
+                }
+
+                double speed = vc.getSpeed();
+                if (speed < -SPEED_MAX) {
+                    speed = -SPEED_MAX;
+                }
+                if (speed > SPEED_MAX) {
+                    speed = SPEED_MAX;
+                }
+
+                // Create a sendable packet.
+                payload = createPayloadForSettingAccelerationAndSteering(speed, (uint8_t)steering);
+                packet = createPacket(payload);
+
+                connectionToUDPServer->send(packet);
+            }
+
+            // Query values from the vehicle.
+            payload = createPayloadForQueryOnboardData();
             packet = createPacket(payload);
             connectionToUDPServer->send(packet);
-	    }
 
-	    //Stop the car after stopping the Proxy
-	    payload = createPayloadForSettingAccelerationAndSteering( 0 , 0 );
-	    packet = createPacket(payload);
-	    connectionToUDPServer->send(packet);
+            // Query ultra sonic values from the vehicle.
+            payload = createPayloadForQueryUltraSonicData();
+            packet = createPacket(payload);
+            connectionToUDPServer->send(packet);
+
+            // Query infra red values from the vehicle.
+            payload = createPayloadForQueryInfraRedData();
+            packet = createPacket(payload);
+            connectionToUDPServer->send(packet);
+
+            // Query position data from the vehicle.
+            payload = createPayloadForQueryPositionData();
+            packet = createPacket(payload);
+            connectionToUDPServer->send(packet);
+
+            // Query travel counter from the vehicle.
+            payload = createPayloadForReadTravelCounter(true);
+            packet = createPacket(payload);
+            connectionToUDPServer->send(packet);
+
+            {
+                Lock l(m_userButtonMutex);
+                // Distribute UserButtonData.
+                // MSV: Create a container with user data Container::USER_BUTTON.
+                Container c(Container::USER_BUTTON, m_userButtonData);
+                getConference().send(c);
+            }
+
+            {
+                Lock l(m_sensorBoardMutex);
+                // Distribute SensorBoardData.
+                // MSV: Create a container with user data Container::USER_DATA_0.
+                Container c(Container::USER_DATA_0, m_sensorBoardData);
+                getConference().send(c);
+            }
+
+            {
+                Lock l(m_vehicleDataMutex);
+                // Distribute VehicleData.
+                // MSV: Create a container with user data Container::VEHICLEDATA.
+                Container c(Container::VEHICLEDATA, m_vehicleData);
+                getConference().send(c);
+            }
+        }
+
+        //Stop the car after stopping the Proxy
+        const double STEERING_STRAIGHT = 127;
+        const double SPEED_0 = 0;
+
+        payload = createPayloadForSettingAccelerationAndSteering(SPEED_0 , STEERING_STRAIGHT);
+        packet = createPacket(payload);
+        connectionToUDPServer->send(packet);
 
         // Destroy connections to UDP_Server.
         OPENDAVINCI_CORE_DELETE_POINTER(connectionToUDPServer);
@@ -629,7 +960,7 @@ namespace msv {
         connectionFromUDPServer->setStringListener(NULL);
         OPENDAVINCI_CORE_DELETE_POINTER(connectionFromUDPServer);
 
-	    return ModuleState::OKAY;
+        return ModuleState::OKAY;
     }
 
 } // msv

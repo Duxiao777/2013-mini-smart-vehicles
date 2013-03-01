@@ -12,10 +12,6 @@ SET (MSVDATA_LIBS msv-data)
 # Library that contains data to be interchanged between OpenDaVINCI and hesperia, and the embedded software on the Discovery board.
 ADD_SUBDIRECTORY (msv-data)
 
-# Application for receiving and processing data from the Discovery board.
-ADD_SUBDIRECTORY (sensorboard)
-ADD_SUBDIRECTORY (testsensorboardsender)
-
 # Application for receiving data from hesperia or a USB camera.
 ADD_SUBDIRECTORY (lanedetector)
 

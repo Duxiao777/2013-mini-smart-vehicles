@@ -14,11 +14,14 @@
 #include "core/base/KeyValueConfiguration.h"
 #include "core/base/Mutex.h"
 #include "core/data/Container.h"
+#include "core/data/TimeStamp.h"
 #include "core/io/ContainerConference.h"
 #include "core/io/ContainerListener.h"
-#include "core/data/control/ForceControl.h"
+#include "core/data/control/VehicleControl.h"
 
 #include "QtIncludes.h"
+
+#include "UserButtonData.h"
 
 #include "plugins/PlugIn.h"
 
@@ -74,10 +77,15 @@ namespace cockpit {
                     void TimerEvent();
                     void setHz(int v);
 
+                    void userButtonPressed();
+                    void userButtonReleased();
+
+                    void sendButtonReleased();
+
                 private:
                     core::io::ContainerConference &m_conference;
-                    core::base::Mutex m_forceControlMutex;
-                    core::data::control::ForceControl m_forceControl;
+                    core::base::Mutex m_vehicleControlMutex;
+                    core::data::control::VehicleControl m_vehicleControl;
 
                     core::base::Mutex m_HzMutex;
                     uint32_t m_Hz;
@@ -87,6 +95,16 @@ namespace cockpit {
                     QCheckBox *m_brakeLEDs;
                     QCheckBox *m_leftTurningLEDs;
                     QCheckBox *m_rightTurningLEDs;
+
+                    core::base::Mutex m_userButtonMutex;
+                    QPushButton *m_userButton;
+                    core::data::TimeStamp m_userButtonPressedTS;
+                    bool m_userButtonPressed;
+                    msv::UserButtonData m_userButtonData;
+
+                    core::base::Mutex m_sendVehicleControlDataMutex;
+                    bool m_sendVehicleControlData;
+                    QPushButton *m_sendVehicleControlButton;
             };
         }
     }

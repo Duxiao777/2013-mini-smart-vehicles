@@ -133,43 +133,60 @@
 <context>
     <name>ControllerWidget</name>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="49"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="58"/>
         <source>Runtime frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="51"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="60"/>
         <source>Runtime frequency [Hz]: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="64"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="73"/>
         <source>Vehicle&apos;s LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="66"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="75"/>
         <source>Brake LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="67"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="76"/>
         <source>Left flashing LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="68"/>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="77"/>
         <source>Right flashing LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/controller/ControllerWidget.cpp" line="82"/>
-        <source>Vehicle control (you must click in this area to control by keyboard!)</source>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="79"/>
+        <source>UserButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/plugins/controller/ControllerWidget.cpp" line="85"/>
-        <source>w=increase brake, d=decrease brake, up=accel., down=decel., left, right</source>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="171"/>
+        <source>NOT sending control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="102"/>
+        <source>Vehicle control (you must click in this area to control by keyboard!)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="105"/>
+        <source>w=accel., s=decel., up=inc speed, down=dec speed, left, right</source>
+        <oldsource>up=accel., down=decel., left, right</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/plugins/controller/ControllerWidget.cpp" line="168"/>
+        <source>sending control</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -269,17 +286,17 @@
 <context>
     <name>SpyWidget</name>
     <message>
-        <location filename="src/plugins/spy/SpyWidget.cpp" line="54"/>
+        <location filename="src/plugins/spy/SpyWidget.cpp" line="55"/>
         <source>Datatype</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/spy/SpyWidget.cpp" line="54"/>
+        <location filename="src/plugins/spy/SpyWidget.cpp" line="55"/>
         <source>Received@</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/spy/SpyWidget.cpp" line="54"/>
+        <location filename="src/plugins/spy/SpyWidget.cpp" line="55"/>
         <source>Sent@</source>
         <translation type="unfinished"></translation>
     </message>

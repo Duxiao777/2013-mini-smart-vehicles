@@ -180,6 +180,8 @@ namespace core {
                     return "VehicleData";
                 case DRAW_LINE:
                     return "Draw line";
+                case VEHICLECONTROL:
+                    return "VehicleControl";
                 case USER_DATA_0:
                     return "UserData_0";
                 case USER_DATA_1:

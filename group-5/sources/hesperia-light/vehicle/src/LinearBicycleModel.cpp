@@ -50,16 +50,16 @@ namespace vehicle {
         m_oldAcceleration(0,0,0),
         m_vehicleData()
     {
-        m_minimumTurningRadius = kvc.getValue<double>("Vehicle.minimumTurningRadius");
-        m_vehicleMass = kvc.getValue<double>("Vehicle.vehicleMass");
-        m_adherenceCoefficient = kvc.getValue<double>("Vehicle.adherenceCoefficient");
-        m_idleForce = kvc.getValue<double>("Vehicle.idleForce");
-        m_Ksteering = kvc.getValue<double>("Vehicle.Ksteering");
-        m_maximumSteeringRate = kvc.getValue<double>("Vehicle.maximumSteeringRate");
-        m_Kthrottle = kvc.getValue<double>("Vehicle.Kthrottle");
-        m_tauBrake = kvc.getValue<double>("Vehicle.tauBrake");
-        m_KstaticBrake = kvc.getValue<double>("Vehicle.KstaticBrake");
-        m_KdynamicBrake = kvc.getValue<double>("Vehicle.KdynamicBrake");
+        m_minimumTurningRadius = kvc.getValue<double>("Vehicle.LinearBicycleModel.minimumTurningRadius");
+        m_vehicleMass = kvc.getValue<double>("Vehicle.LinearBicycleModel.vehicleMass");
+        m_adherenceCoefficient = kvc.getValue<double>("Vehicle.LinearBicycleModel.adherenceCoefficient");
+        m_idleForce = kvc.getValue<double>("Vehicle.LinearBicycleModel.idleForce");
+        m_Ksteering = kvc.getValue<double>("Vehicle.LinearBicycleModel.Ksteering");
+        m_maximumSteeringRate = kvc.getValue<double>("Vehicle.LinearBicycleModel.maximumSteeringRate");
+        m_Kthrottle = kvc.getValue<double>("Vehicle.LinearBicycleModel.Kthrottle");
+        m_tauBrake = kvc.getValue<double>("Vehicle.LinearBicycleModel.tauBrake");
+        m_KstaticBrake = kvc.getValue<double>("Vehicle.LinearBicycleModel.KstaticBrake");
+        m_KdynamicBrake = kvc.getValue<double>("Vehicle.LinearBicycleModel.KdynamicBrake");
 
         // Stop the vehicle.
         m_vehicleDesiredResistiveEffortX = (m_idleForce/(m_KstaticBrake * m_tauBrake)) + 0.1;
@@ -158,6 +158,7 @@ namespace vehicle {
         m_heading = fmod(m_heading, 2 * hesperia::data::Constants::PI);
 
         Point3 position(m_oldPosition.getX() + x, m_oldPosition.getY() + y, 0);
+        double relDrivenPath = (position - m_oldPosition).lengthXY();
         m_oldPosition = position;
 
         // Set velocity.
@@ -168,13 +169,15 @@ namespace vehicle {
         Point3 acceleration;
 
         // Update internal data.
+        m_vehicleData.setPosition(position);
         m_vehicleData.setVelocity(velocity);
         m_vehicleData.setSpeed(m_speed * m_direction);
         m_vehicleData.setV_log(0);
         m_vehicleData.setV_batt(0);
         // For fake :-)
         m_vehicleData.setTemp(19.5 + cos(m_heading + m_deltaHeading/2.0));
-        m_vehicleData.setSimulation(true);
+        m_vehicleData.setRelTraveledPath(relDrivenPath);
+        m_vehicleData.setAbsTraveledPath(m_vehicleData.getAbsTraveledPath() + relDrivenPath);
 
         m_previousTime = currentTime;
         return EgoState(position, m_orientation, velocity, acceleration);

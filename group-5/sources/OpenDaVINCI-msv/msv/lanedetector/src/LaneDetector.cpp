@@ -18,6 +18,9 @@
 #include "core/io/ContainerConference.h"
 #include "core/wrapper/SharedMemoryFactory.h"
 
+// Data structures from msv-data library:
+#include "SteeringData.h"
+
 #include "LaneDetector.h"
 
 namespace msv {
@@ -100,8 +103,9 @@ namespace msv {
 	    return retVal;
     }
 
+    // You should start your work in this method.
     void LaneDetector::processImage() {
-        // Show the image
+        // Example: Show the image.
         if (m_debug) {
             if (m_image != NULL) {
                 cvShowImage("WindowShowImage", m_image);
@@ -109,10 +113,28 @@ namespace msv {
             }
         }
 
-        // Do something with the image m_image here.
+
+
+        // 1. Do something with the image m_image here, for example: find lane marking features, optimize quality, ...
+
+
+
+        // 2. Calculate desired steering commands from your image features to be processed by driver.
+
+
+
+        // Here, you see an example of how to send the data structure SteeringData to the ContainerConference. This data structure will be received by all running components. In our example, it will be processed by Driver.
+        SteeringData sd;
+        sd.setExampleData(1234.56);
+
+        // Create container for finally sending the data.
+        Container c(Container::USER_DATA_1, sd);
+        // Send container.
+        getConference().send(c);
     }
 
     // This method will do the main data processing job.
+    // Therefore, it tries to open the real camera first. If that fails, the virtual camera images from camgen are used.
     ModuleState::MODULE_EXITCODE LaneDetector::body() {
 	    // Get configuration data.
 	    KeyValueConfiguration kv = getKeyValueConfiguration();
