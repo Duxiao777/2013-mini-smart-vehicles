@@ -116,6 +116,7 @@ namespace msv {
                 cvWaitKey(10);
             }
         }
+SteeringData sd;
 
 	//	sprintf(filename,"%u.bmp",contnum); // when need to save images
 	//  cvSaveImage(filename, m_image); // when need to save images
@@ -137,9 +138,9 @@ namespace msv {
 		    if(!(fabs(s.val[0]-0.0) < 0.00001))
 		      {
 			//do your job
-		      
+			sd.setExampleData(k);		      
 			// printf("intensity=%f",s.val[0]);
-			printf("X=%d  Y=%d\n",j,k);
+			//		printf("X=%d  Y=%d\n",j,k);
 		      
 		      }
 		    //else{
@@ -164,8 +165,7 @@ namespace msv {
 
 
         // Here, you see an example of how to send the data structure SteeringData to the ContainerConference. This data structure will be received by all running components. In our example, it will be processed by Driver.
-        SteeringData sd;
-        sd.setExampleData(0);
+        
 
         // Create container for finally sending the data.
         Container c(Container::USER_DATA_1, sd);

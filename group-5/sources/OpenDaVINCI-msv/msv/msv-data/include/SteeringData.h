@@ -16,10 +16,12 @@
 
 #include "core/data/SerializableData.h"
 
+
+
 namespace msv {
 
 	using namespace std;
-
+	
     /**
      * This is an example how you can send data from one component to another.
      */
@@ -58,15 +60,23 @@ namespace msv {
              */
             void setExampleData(const double &e);
 
-			virtual ostream& operator<<(ostream &out) const;
-			virtual istream& operator>>(istream &in);
+/*	    double getDataX() const;
+	    void setDataX(const double &X);
 
-			virtual const string toString() const;
-
-		private:
+	    double getDataY() const;
+	    void setDataY(const double &Y);
+*/
+	    virtual ostream& operator<<(ostream &out) const;
+	    virtual istream& operator>>(istream &in);
+	    
+	    virtual const string toString() const;
+	    
+	private:
             double m_exampleData;
+	    //	    double m_DataX;
+	    //double m_DataY;
 	};
-
+	
 } // msv
 
 #endif /*STEERINGDATA_H_*/
