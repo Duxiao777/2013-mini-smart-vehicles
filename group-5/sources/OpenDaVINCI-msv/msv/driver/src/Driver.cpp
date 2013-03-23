@@ -81,7 +81,7 @@ namespace msv {
 		        vc.setSpeed(0.4);
 
                 // With setSteeringWheelAngle, you can steer in the range of -26 (left) .. 0 (straight) .. +25 (right)
-                double desiredSteeringWheelAngle = 4; // 4 degree but SteeringWheelAngle expects the angle in radians!
+                double desiredSteeringWheelAngle = 0; // 4 degree but SteeringWheelAngle expects the angle in radians!
 		        vc.setSteeringWheelAngle(desiredSteeringWheelAngle * Constants::DEG2RAD);
 
                 // You can also turn on or off various lights:

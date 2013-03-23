@@ -8,6 +8,7 @@
 #include <stdc-predef.h>
 #endif
 
+#include <math.h>
 #include <iostream>
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
@@ -103,6 +104,9 @@ namespace msv {
 	    return retVal;
     }
 
+    char filename[80] ; // when need to save images
+    int contnum =1; // when need to save images
+
     // You should start your work in this method.
     void LaneDetector::processImage() {
         // Example: Show the image.
@@ -113,7 +117,38 @@ namespace msv {
             }
         }
 
+	//	sprintf(filename,"%u.bmp",contnum); // when need to save images
+	//  cvSaveImage(filename, m_image); // when need to save images
 
+	  	  IplImage* gray_image = cvCreateImage(cvGetSize(m_image),IPL_DEPTH_8U,1);
+		  //		  IplImage* p_image = cvCreateImage(cvGetSize(m_image),IPL_DEPTH_8U,1);
+	  	cvCvtColor( m_image, gray_image, CV_BGR2GRAY );
+		//cvCvtColor(im_rgb,im_gray,CV_RGB2GRAY);
+		cvThreshold(gray_image,gray_image,100,255,CV_THRESH_BINARY);
+
+		//      		for (int j = gray_image->height-100; j < gray_image->height; j++) {	
+		int j = gray_image->height-4;
+		//	  uchar* pSrc = (uchar*) (gray_image->imageData + j * gray_image->widthStep);
+		//  uchar* pDst = (uchar*) (p_image->imageData + j * p_image->widthStep);
+
+		  for (int k = 0; k < gray_image->width; k++) {
+		    CvScalar s;
+		    s=cvGet2D(gray_image,j,k); // get the (i,j) pixel value
+		    if(!(fabs(s.val[0]-0.0) < 0.00001))
+		      {
+			//do your job
+		      
+		    printf("intensity=%f\n",s.val[0]);
+		      }
+		    //		      printf("%f, ", ((float*)(gray_image->imageData + gray_image->widthStep*j))[k]);
+		  }
+		  
+		  //		  }
+
+  //	   sprintf(filename,"%u.bmp",contnum);
+  //	  cvSaveImage(filename, p_image);
+
+  //	contnum++;  // when need to save images
 
         // 1. Do something with the image m_image here, for example: find lane marking features, optimize quality, ...
 
@@ -125,7 +160,7 @@ namespace msv {
 
         // Here, you see an example of how to send the data structure SteeringData to the ContainerConference. This data structure will be received by all running components. In our example, it will be processed by Driver.
         SteeringData sd;
-        sd.setExampleData(1234.56);
+        sd.setExampleData(0);
 
         // Create container for finally sending the data.
         Container c(Container::USER_DATA_1, sd);
