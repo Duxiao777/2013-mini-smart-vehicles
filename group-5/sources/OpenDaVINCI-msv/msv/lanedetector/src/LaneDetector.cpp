@@ -125,7 +125,7 @@ SteeringData sd;
 		  //		  IplImage* p_image = cvCreateImage(cvGetSize(m_image),IPL_DEPTH_8U,1);
 	  	cvCvtColor( m_image, gray_image, CV_BGR2GRAY );
 		//cvCvtColor(im_rgb,im_gray,CV_RGB2GRAY);
-		cvThreshold(gray_image,gray_image,100,255,CV_THRESH_BINARY);
+		cvThreshold(gray_image,gray_image,237,255,CV_THRESH_BINARY);
 
 		//      		for (int j = gray_image->height-100; j < gray_image->height; j++) {	
 		int j = gray_image->height-4;
