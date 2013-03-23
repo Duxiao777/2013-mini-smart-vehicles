@@ -138,8 +138,13 @@ namespace msv {
 		      {
 			//do your job
 		      
-		    printf("intensity=%f\n",s.val[0]);
+			// printf("intensity=%f",s.val[0]);
+			printf("X=%d  Y=%d\n",j,k);
+		      
 		      }
+		    //else{
+		    //  printf("\n");
+		    //}
 		    //		      printf("%f, ", ((float*)(gray_image->imageData + gray_image->widthStep*j))[k]);
 		  }
 		  
