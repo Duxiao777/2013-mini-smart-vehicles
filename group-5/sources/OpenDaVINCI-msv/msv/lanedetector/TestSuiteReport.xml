@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<world>
+    <started timestamp="2013-03-22 20:56:45"/>
+    <testsuite name="LaneDetectorTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/lanedetector/testsuites/LaneDetectorTestSuite.h" line="55">
+        <started timestamp="2013-03-22 20:56:45"/>
+        <testcase name="testLaneDetectorSuccessfullyCreated" line="89">
+        </testcase>
+        <testcase name="testLaneDetectorProcessingMethod" line="93">
+        </testcase>
+        <testcase name="testLaneDetectorProcessingMethodInvalidSharedMemory" line="120">
+        </testcase>
+        <finished timestamp="2013-03-22 20:56:45"/>
+    </testsuite>
+    <finished timestamp="2013-03-22 20:56:45"/>
+    <summary>
+    	<totaltests>3</totaltests>
+    	<failedtests>0</failedtests>
+    	<successrate>100</successrate>
+    </summary>
+</world>

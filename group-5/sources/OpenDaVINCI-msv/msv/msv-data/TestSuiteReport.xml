@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<world>
+    <started timestamp="2013-03-22 20:56:44"/>
+    <testsuite name="MSVDataTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/msv-data/testsuites/SensorBoardTestSuite.h" line="18">
+        <started timestamp="2013-03-22 20:56:44"/>
+        <testcase name="testDataSpecification" line="30">
+        </testcase>
+        <testcase name="testCopyConstructor" line="45">
+        </testcase>
+        <testcase name="testAssignmentOperator" line="62">
+        </testcase>
+        <testcase name="testSerialization" line="80">
+        </testcase>
+        <finished timestamp="2013-03-22 20:56:44"/>
+    </testsuite>
+    <finished timestamp="2013-03-22 20:56:44"/>
+    <summary>
+    	<totaltests>4</totaltests>
+    	<failedtests>0</failedtests>
+    	<successrate>100</successrate>
+    </summary>
+</world>

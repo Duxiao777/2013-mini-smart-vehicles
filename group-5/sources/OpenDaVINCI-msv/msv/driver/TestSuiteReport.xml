@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<world>
+    <started timestamp="2013-03-22 20:56:45"/>
+    <testsuite name="DriverTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/driver/testsuites/DriverTestSuite.h" line="36">
+        <started timestamp="2013-03-22 20:56:45"/>
+        <testcase name="testDriverSuccessfullyCreated" line="70">
+        </testcase>
+        <finished timestamp="2013-03-22 20:56:45"/>
+    </testsuite>
+    <finished timestamp="2013-03-22 20:56:45"/>
+    <summary>
+    	<totaltests>1</totaltests>
+    	<failedtests>0</failedtests>
+    	<successrate>100</successrate>
+    </summary>
+</world>

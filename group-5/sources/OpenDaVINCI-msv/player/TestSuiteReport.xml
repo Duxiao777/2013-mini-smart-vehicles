@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<world>
+    <started timestamp="2013-03-22 20:55:35"/>
+    <testsuite name="PlayerTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/player/testsuites/PlayerTestSuite.h" line="87">
+        <started timestamp="2013-03-22 20:55:35"/>
+        <testcase name="testPlayerCommand" line="106">
+        </testcase>
+        <testcase name="testRealtimeReplayNoRewind" line="143">
+        </testcase>
+        <testcase name="testDoubleRealtimeReplayNoRewind" line="263">
+        </testcase>
+        <testcase name="testHalfRealtimeReplayNoRewind" line="395">
+        </testcase>
+        <testcase name="testRealtimeReplayAutoRewind" line="526">
+        </testcase>
+        <testcase name="testRealtimeReplayNoRewindRemoteControl" line="669">
+        </testcase>
+        <finished timestamp="2013-03-22 20:56:43"/>
+    </testsuite>
+    <finished timestamp="2013-03-22 20:56:43"/>
+    <summary>
+    	<totaltests>6</totaltests>
+    	<failedtests>0</failedtests>
+    	<successrate>100</successrate>
+    </summary>
+</world>

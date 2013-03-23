@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<world>
+    <started timestamp="2013-03-22 20:55:22"/>
+    <testsuite name="RecorderTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/recorder/testsuites/RecorderTestSuite.h" line="60">
+        <started timestamp="2013-03-22 20:55:22"/>
+        <testcase name="testRecorder" line="79">
+        </testcase>
+        <testcase name="testRecorderCommand" line="191">
+        </testcase>
+        <testcase name="testRecorderRemoteControl" line="222">
+        </testcase>
+        <finished timestamp="2013-03-22 20:55:35"/>
+    </testsuite>
+    <finished timestamp="2013-03-22 20:55:35"/>
+    <summary>
+    	<totaltests>3</totaltests>
+    	<failedtests>0</failedtests>
+    	<successrate>100</successrate>
+    </summary>
+</world>

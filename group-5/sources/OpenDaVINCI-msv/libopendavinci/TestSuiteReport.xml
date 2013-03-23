@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<world>
+    <started timestamp="2013-03-22 20:51:32"/>
+    <testsuite name="DisposalTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/DisposalTestSuite.h" line="26">
+        <started timestamp="2013-03-22 20:51:32"/>
+        <testcase name="testDisposal" line="28">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:32"/>
+    </testsuite>
+    <testsuite name="QueueTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/QueueTestSuite.h" line="218">
+        <started timestamp="2013-03-22 20:51:32"/>
+        <testcase name="testLIFO" line="220">
+        </testcase>
+        <testcase name="testFIFO" line="241">
+        </testcase>
+        <testcase name="testBufferedFIFOAsRegularFIFO" line="261">
+        </testcase>
+        <testcase name="testBufferedFIFO" line="281">
+        </testcase>
+        <testcase name="testFixedSizeBufferedFIFO" line="352">
+        </testcase>
+        <testcase name="testBufferedLIFOAsRegularLIFO" line="442">
+        </testcase>
+        <testcase name="testBufferedLIFO" line="462">
+        </testcase>
+        <testcase name="testFixedSizeBufferedLIFO" line="533">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:33"/>
+    </testsuite>
+    <testsuite name="AbstractCIDModuleTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/AbstractCIDModuleTestSuite.h" line="81">
+        <started timestamp="2013-03-22 20:51:33"/>
+        <testcase name="testAbstractCIDModule" line="83">
+        </testcase>
+        <testcase name="testAbstractCIDModuleCID" line="109">
+        </testcase>
+        <testcase name="testAbstractCIDModuleWrongCID1" line="128">
+        </testcase>
+        <testcase name="testAbstractCIDModuleWrongCID2" line="154">
+        </testcase>
+        <testcase name="testKillAbstractCIDModule" line="179">
+        </testcase>
+        <testcase name="testExceptionAbstractCIDModule" line="225">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:33"/>
+    </testsuite>
+    <testsuite name="ConferenceFactoryTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ConferenceFactoryTestSuite.h" line="70">
+        <started timestamp="2013-03-22 20:51:33"/>
+        <testcase name="testControlledContainerFactoryTestSuite" line="72">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:33"/>
+    </testsuite>
+    <testsuite name="ControlFlowTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ControlFlowTestSuite.h" line="247">
+        <started timestamp="2013-03-22 20:51:33"/>
+        <testcase name="testControlledContainerFactoryTestSuite" line="266">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:40"/>
+    </testsuite>
+    <testsuite name="ServiceTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ServiceTestSuite.h" line="89">
+        <started timestamp="2013-03-22 20:51:40"/>
+        <testcase name="testService" line="108">
+        </testcase>
+        <testcase name="testSeveralServices" line="127">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:51"/>
+    </testsuite>
+    <testsuite name="TimeFactoryTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/TimeFactoryTestSuite.h" line="36">
+        <started timestamp="2013-03-22 20:51:51"/>
+        <testcase name="testCopyControlledTime" line="38">
+        </testcase>
+        <testcase name="testControlledTimeFactoryTestSuite" line="51">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:51"/>
+    </testsuite>
+    <testsuite name="CommandLineParserTestSuite" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/CommandLineParserTestSuite.h" line="21">
+        <started timestamp="2013-03-22 20:51:51"/>
+        <testcase name="testParse" line="23">
+        </testcase>
+        <testcase name="testParseSeveralArgumentFromSameKey" line="51">
+        </testcase>
+        <testcase name="testGetInvalidArgument" line="91">
+        </testcase>
+        <testcase name="testParseIncompleteArgument" line="105">
+        </testcase>
+        <testcase name="testUnhandledArgument" line="139">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:51"/>
+    </testsuite>
+    <testsuite name="SharedPointerTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/SharedPointerTestSuite.h" line="32">
+        <started timestamp="2013-03-22 20:51:51"/>
+        <testcase name="testCreateSharedPointer" line="34">
+        </testcase>
+        <testcase name="testCreateDestroySharedPointer" line="48">
+        </testcase>
+        <testcase name="testCreateDestroySharedPointerUsingCopyConstructor" line="65">
+        </testcase>
+        <testcase name="testCreateDestroySharedPointerUsingAssignmentOperator" line="88">
+        </testcase>
+        <testcase name="testCreateAndKeepSharedPointerUsingCopyConstructor" line="111">
+        </testcase>
+        <testcase name="testCreateAndKeepSharedPointerUsingAssignmentOperator" line="138">
+        </testcase>
+        <testcase name="testSharedPointerInsideSTL" line="166">
+        </testcase>
+        <testcase name="testSharedPointerInsideSTLAndCopy" line="201">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:51"/>
+    </testsuite>
+    <testsuite name="ConditionTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ConditionTestSuite.h" line="92">
+        <started timestamp="2013-03-22 20:51:51"/>
+        <testcase name="testLocking" line="94">
+        </testcase>
+        <testcase name="testWakeOne" line="107">
+        </testcase>
+        <testcase name="testWakeAll" line="143">
+        </testcase>
+        <testcase name="testTimeCondition" line="183">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:51"/>
+    </testsuite>
+    <testsuite name="TimeStampTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/TimeStampTestSuite.h" line="21">
+        <started timestamp="2013-03-22 20:51:51"/>
+        <testcase name="testTimeStamp28042009" line="23">
+        </testcase>
+        <finished timestamp="2013-03-22 20:51:51"/>
+    </testsuite>
+    <testsuite name="TCPAcceptorTestsuite" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/TCPTestSuite.h" line="109">
+        <started timestamp="2013-03-22 20:51:51"/>
+        <testcase name="testAccept" line="112">
+        </testcase>
+        <testcase name="testMultipleAccept" line="131">
+        </testcase>
+        <testcase name="testNoAcceptBoost" line="150">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:06"/>
+    </testsuite>
+    <testsuite name="TCPConnectionTestSuite" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/TCPTestSuite.h" line="264">
+        <started timestamp="2013-03-22 20:52:06"/>
+        <testcase name="testTransfer" line="267">
+        </testcase>
+        <testcase name="testError" line="286">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:13"/>
+    </testsuite>
+    <testsuite name="TCPGathererTestSuite" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/TCPTestSuite.h" line="306">
+        <started timestamp="2013-03-22 20:52:13"/>
+        <testcase name="testNoGathering" line="326">
+        </testcase>
+        <testcase name="testGathering" line="345">
+        </testcase>
+        <testcase name="testMixedGathering" line="371">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:15"/>
+    </testsuite>
+    <testsuite name="RuntimeControlTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/RuntimeControlTestSuite.h" line="91">
+        <started timestamp="2013-03-22 20:52:15"/>
+        <testcase name="testRuntimeControlRegularRun" line="93">
+        </testcase>
+        <testcase name="testRuntimeControlSpecializedConfigurationRegularRun" line="153">
+        </testcase>
+        <testcase name="testRuntimeControlCorruptConfigurationRun" line="206">
+        </testcase>
+        <testcase name="testRuntimeControlRegularRunNoSetupCalled" line="252">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:49"/>
+    </testsuite>
+    <testsuite name="ClockTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ClockTestSuite.h" line="21">
+        <started timestamp="2013-03-22 20:52:49"/>
+        <testcase name="testClock" line="23">
+        </testcase>
+        <testcase name="testCopyClock" line="67">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:49"/>
+    </testsuite>
+    <testsuite name="SerializationTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/SerializationTestSuite.h" line="118">
+        <started timestamp="2013-03-22 20:52:49"/>
+        <testcase name="testSerializationDeserialization" line="120">
+        </testcase>
+        <testcase name="testArraySerialisation" line="143">
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+            <warning line="166">false            </warning>
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:49"/>
+    </testsuite>
+    <testsuite name="ContainerTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ContainerTestSuite.h" line="20">
+        <started timestamp="2013-03-22 20:52:49"/>
+        <testcase name="testContainerData" line="22">
+        </testcase>
+        <testcase name="testContainerDataUserType" line="38">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:49"/>
+    </testsuite>
+    <testsuite name="SharedMemoryTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/SharedMemoryTestSuite.h" line="18">
+        <started timestamp="2013-03-22 20:52:49"/>
+        <testcase name="testSharedMemory" line="20">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:49"/>
+    </testsuite>
+    <testsuite name="MutexTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/MutexTestSuite.h" line="34">
+        <started timestamp="2013-03-22 20:52:49"/>
+        <testcase name="testTryLock" line="36">
+        </testcase>
+        <testcase name="testLockAndUnlock" line="42">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:49"/>
+    </testsuite>
+    <testsuite name="ConfigurationTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/KeyValueConfigurationTestSuite.h" line="22">
+        <started timestamp="2013-03-22 20:52:49"/>
+        <testcase name="testReadSimpleData" line="24">
+        </testcase>
+        <testcase name="testReadSimpleDataCopyConstructor" line="59">
+        </testcase>
+        <testcase name="testReadSimpleDataAssignmentOperator" line="96">
+        </testcase>
+        <testcase name="testReadCommentedData" line="134">
+        </testcase>
+        <testcase name="testReadCommentedDataCaseInsensitive" line="174">
+        </testcase>
+        <testcase name="testReadCommentedDataSubset" line="206">
+        </testcase>
+        <finished timestamp="2013-03-22 20:52:50"/>
+    </testsuite>
+    <testsuite name="RuntimeControlContainerMultipleAppsTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/RuntimeControlContainerMultipleAppsTestSuite.h" line="279">
+        <started timestamp="2013-03-22 20:52:50"/>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingTwoAppsSameFreqOneSP" line="281">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingTwoAppsOneReceivingDataFromOtherAppSameFreqOneSP" line="413">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingTwoAppsA1twiceAsFastAsA2OneSP" line="558">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingOneAppTwoSystemPartsSameFreq" line="696">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingOneAppTwoSystemPartsSP2TwiceAsFastAsSP1" line="811">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingTwoAppsSameFreqTwoSystemPartsSameFreq" line="937">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingTwoAppsA1twiceAsFastAsA2TwoSystemPartsSameFreq" line="1096">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingTwoAppsSameFreqTwoSystemPartsSP2TwiceAsFastAsSP1" line="1287">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingTwoAppsA1TwiceAsFastAsA2FreqTwoSystemPartsSP2TwiceAsFastAsSP1" line="1468">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:13"/>
+    </testsuite>
+    <testsuite name="RunnerTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/RunnerTestSuite.h" line="32">
+        <started timestamp="2013-03-22 20:54:13"/>
+        <testcase name="testFrequencies" line="34">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:13"/>
+    </testsuite>
+    <testsuite name="DataStoreTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/DataStoreTestSuite.h" line="159">
+        <started timestamp="2013-03-22 20:54:13"/>
+        <testcase name="testDataStore" line="162">
+        </testcase>
+        <testcase name="testMassData" line="183">
+        </testcase>
+        <testcase name="testSerializationDeserialization" line="228">
+        </testcase>
+        <testcase name="testDataStoreForDataExchange" line="257">
+        </testcase>
+        <testcase name="testSerializationDeserializationWithFileBackend" line="301">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:14"/>
+    </testsuite>
+    <testsuite name="ConnectionTestsuite" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ConnectionTestSuite.h" line="38">
+        <started timestamp="2013-03-22 20:54:14"/>
+        <testcase name="testAcceptAndConnect" line="40">
+        </testcase>
+        <testcase name="testErrorHandler" line="89">
+        </testcase>
+        <testcase name="testTransfer" line="120">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:26"/>
+    </testsuite>
+    <testsuite name="ZipTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ZipTestSuite.h" line="23">
+        <started timestamp="2013-03-22 20:54:26"/>
+        <testcase name="testDecompression" line="25">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:26"/>
+    </testsuite>
+    <testsuite name="DMCPDiscovererTestsuite" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/DMCPDiscovererTestSuite.h" line="60">
+        <started timestamp="2013-03-22 20:54:26"/>
+        <testcase name="testClientAndServer" line="64">
+            <warning line="82">"IP: 10.0.2.15, Port: 12345"            </warning>
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:27"/>
+    </testsuite>
+    <testsuite name="FalseSerializationTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/FalseSerializationTestSuite.h" line="94">
+        <started timestamp="2013-03-22 20:54:27"/>
+        <testcase name="testSerializationDeserialization" line="96">
+        </testcase>
+        <testcase name="testTimeStamp35" line="115">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:27"/>
+    </testsuite>
+    <testsuite name="RuntimeControlContainerTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/RuntimeControlContainerTestSuite.h" line="197">
+        <started timestamp="2013-03-22 20:54:27"/>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingNotSending" line="199">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSending" line="263">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingAppTwiceAsFastAsSC" line="341">
+        </testcase>
+        <testcase name="testRuntimeControlContainerRegularRunReceivingSendingAppHalfAsFastAsSC" line="419">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:50"/>
+    </testsuite>
+    <testsuite name="ConferenceClientModuleTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/ConferenceClientModuleTestSuite.h" line="118">
+        <started timestamp="2013-03-22 20:54:50"/>
+        <testcase name="testConferenceClientModule" line="137">
+        </testcase>
+        <finished timestamp="2013-03-22 20:54:56"/>
+    </testsuite>
+    <testsuite name="DMCPConnectionTestsuite" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/DMCPConnectionTestSuite.h" line="38">
+        <started timestamp="2013-03-22 20:54:56"/>
+        <testcase name="testClientAndServer" line="51">
+        </testcase>
+        <finished timestamp="2013-03-22 20:55:02"/>
+    </testsuite>
+    <testsuite name="TreeNodeTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/libopendavinci/testsuites/TreeNodeTestSuite.h" line="19">
+        <started timestamp="2013-03-22 20:55:02"/>
+        <testcase name="testSimpleTree" line="38">
+        </testcase>
+        <finished timestamp="2013-03-22 20:55:02"/>
+    </testsuite>
+    <finished timestamp="2013-03-22 20:55:02"/>
+    <summary>
+    	<totaltests>95</totaltests>
+    	<failedtests>0</failedtests>
+    	<successrate>100</successrate>
+    </summary>
+</world>

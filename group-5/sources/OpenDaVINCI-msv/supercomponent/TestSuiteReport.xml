@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<world>
+    <started timestamp="2013-03-22 20:55:02"/>
+    <testsuite name="SupercomponentClientModuleTest" file="/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/supercomponent/testsuites/SupercomponentClientModuleTestSuite.h" line="101">
+        <started timestamp="2013-03-22 20:55:02"/>
+        <testcase name="testRegularConfiguration" line="120">
+        </testcase>
+        <testcase name="testConfigurationForModuleWithID" line="199">
+        </testcase>
+        <testcase name="testConfigurationForModuleWithIDEmptyConfiguration" line="274">
+        </testcase>
+        <finished timestamp="2013-03-22 20:55:22"/>
+    </testsuite>
+    <finished timestamp="2013-03-22 20:55:22"/>
+    <summary>
+    	<totaltests>3</totaltests>
+    	<failedtests>0</failedtests>
+    	<successrate>100</successrate>
+    </summary>
+</world>

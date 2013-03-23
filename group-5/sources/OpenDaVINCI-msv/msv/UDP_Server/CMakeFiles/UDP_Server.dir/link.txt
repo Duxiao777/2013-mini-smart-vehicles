@@ -1,0 +1,1 @@
+/usr/bin/c++   -pipe -ansi -Wall    CMakeFiles/UDP_Server.dir/main.cpp.o CMakeFiles/UDP_Server.dir/serialport.cpp.o CMakeFiles/UDP_Server.dir/udpserver.cpp.o CMakeFiles/UDP_Server.dir/moc_serialport.cxx.o CMakeFiles/UDP_Server.dir/moc_udpserver.cxx.o  -o UDP_Server -rdynamic -lQtNetwork -lQtCore 

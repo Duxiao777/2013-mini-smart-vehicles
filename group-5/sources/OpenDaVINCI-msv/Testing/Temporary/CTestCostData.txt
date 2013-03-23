@@ -1,0 +1,11 @@
+OpenDaVINCITestSuite 1 210.467
+SupercomponentTestSuite 1 20.057
+RecorderTestSuite 1 13.0521
+PlayerTestSuite 1 68.1192
+SpyTestSuite 1 0.00438604
+cockpitTestSuite 1 0.642684
+msv-dataTestSuite 1 0.00530999
+lanedetectorTestSuite 1 0.606691
+driverTestSuite 1 0.00351105
+proxyTestSuite 1 0.00510695
+---
