@@ -49,7 +49,7 @@ namespace msv {
 	  bool psfound,psfonlyonce; // parking space found, 0 means not found as 1 found
 	  //	  bool frir;
 	   Point3 desiredPosition;
-	   double desiredHeading;
+	   //	   double desiredHeading; // if vehicle turns right the value will decrease and vice versa
 	   //double i = 0;
 	  while (getModuleState() == ModuleState::RUNNING) {
                 // In the following, you find example for the various data sources that are available:
@@ -100,7 +100,7 @@ namespace msv {
 			  if(psfonlyonce == 0){ // functions which has to execute only once after found
 			    psfonlyonce = 1;
 			    desiredPosition = vd.getPosition(); // position of car when found parking space
-			    desiredHeading = vd.getHeading();
+			    //desiredHeading = vd.getHeading();
 			    vc.setAcceleration(0);
 			    vc.setSpeed(0);
 			    
@@ -108,11 +108,66 @@ namespace msv {
 			  // Replace below two with ,, move two units forward i.e. Y + 2 
 			  // drive until you see a distance range of FRIR more than -1
 			  // if((vd.getVelocity >1)){
-			    //  vc.setAcceleration(0);
-			   vc.setSteeringWheelAngle(-1);
-			    vc.setSpeed(-0.5);
-			   
+			  //  vc.setAcceleration(0);
+			  
+			  if( vd.getPosition().getX() < desiredPosition.getX() ){ // if current position X is less than desired position
+			    
+ 			    if( (sbd.getDistance(1) < 0.9) && (sbd.getDistance(3) < 0.9) ){ // If no IR front and back are having any reading values
+			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(25);
+				vc.setSpeed(-0.2);
+			      }
+			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(-25);
+				vc.setSpeed(0.2);
+			      }
+			      else { // if current position Y matches desired position Y
+				vc.setSteeringWheelAngle(-25);
+				vc.setSpeed(0.2);}
+			    }
+			    
+			    else if((sbd.getDistance(1) < 2 ){ // it CONDITION then only go backward
+			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(25);
+				vc.setSpeed(0.2);
+			      }
+			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(-25);
+				vc.setSpeed(0.2);
+			      }
+			    }
 
+			    else if((sbd.getDistance(3) + 1) > sbd.getDistance(1) ){ // it CONDITION then only go backward
+			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(25);
+				vc.setSpeed(-0.2);
+			      }
+			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(-25);
+				vc.setSpeed(-0.2);
+			      }
+			    }
+
+
+			  }
+			  
+			  
+			  if( vd.getPosition().getX() > desiredPosition.getX() ){ // if current position X is less than desired position
+			    
+			    if( (sbd.getDistance(1) < 0.9) || (sbd.getDistance(3) < 0.9) ){ // If no IR front and back are having any reading values
+			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(-25);
+				vc.setSpeed(-0.2);
+			      }
+			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
+				vc.setSteeringWheelAngle(25);
+				vc.setSpeed(0.2);
+			      }
+			    }
+			    
+			    
+			  }
+			  
 			      //		    printf("XIN %f\n", position.getX()); // position.getX() + 3 = desired X position
 			    //printf("YIN %f\n", position.getY()); // position.getY() = desired Y position
 			  
@@ -126,9 +181,9 @@ namespace msv {
 			//	        vc.setSteeringWheelAngle(1);			
 
 
-			    printf("Heading %f\n",vd.getHeading());
+						    printf("Heading %f\n",vd.getHeading());
  
-			    position = vd.getPosition();
+			    //			    position = vd.getPosition();
 
 			    vc.setBrakeLights(false);
 			vc.setLeftFlashingLights(false);
