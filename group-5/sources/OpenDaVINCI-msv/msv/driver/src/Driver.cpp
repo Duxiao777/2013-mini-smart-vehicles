@@ -41,70 +41,101 @@ namespace msv {
         void Driver::tearDown() {
 	        // This method will be call automatically _after_ return from body().
         }
+  
+
 
         // This method will do the main data processing job.
         ModuleState::MODULE_EXITCODE Driver::body() {
-
-	        while (getModuleState() == ModuleState::RUNNING) {
+	  bool psfound,psfonlyonce; // parking space found, 0 means not found as 1 found
+	  //	  bool frir;
+	   Point3 desiredPosition;
+	   double desiredHeading;
+	   //double i = 0;
+	  while (getModuleState() == ModuleState::RUNNING) {
                 // In the following, you find example for the various data sources that are available:
 
 		        // 1. Get most recent vehicle data:
 		        Container containerVehicleData = getKeyValueDataStore().get(Container::VEHICLEDATA);
 		        VehicleData vd = containerVehicleData.getData<VehicleData> ();
-		        cerr << "Most recent vehicle data: '" << vd.toString() << "'" << endl;
+		        // cerr << "Most recent vehicle data: '" << vd.toString() << "'" << endl;
 
 		        // 2. Get most recent sensor board data:
 		        Container containerSensorBoardData = getKeyValueDataStore().get(Container::USER_DATA_0);
 		        SensorBoardData sbd = containerSensorBoardData.getData<SensorBoardData> ();
-		        cerr << "Most recent sensor board data: '" << sbd.toString() << "'" << endl;
+		        // cerr << "Most recent sensor board data: '" << sbd.toString() << "'" << endl;
 
 		        // 3. Get most recent user button data:
 		        Container containerUserButtonData = getKeyValueDataStore().get(Container::USER_BUTTON);
 		        UserButtonData ubd = containerUserButtonData.getData<UserButtonData> ();
-		        cerr << "Most recent user button data: '" << ubd.toString() << "'" << endl;
+			// cerr << "Most recent user button data: '" << ubd.toString() << "'" << endl;
 
 		        // 4. Get most recent steering data as fill from lanedetector for example:
 		        Container containerSteeringData = getKeyValueDataStore().get(Container::USER_DATA_1);
 		        SteeringData sd = containerSteeringData.getData<SteeringData> ();
-		        cerr << "Most recent steering data: '" << sd.toString() << "'" << endl;
+		        //cerr << "Most recent steering data: '" << sd.toString() << "'" << endl;
 
 
-
-                // Design your control algorithm here depending on the input data from above.
-
-
-
-		        // Create vehicle control data.
 		        VehicleControl vc;
-
-                // With setSpeed you can set a desired speed for the vehicle in the range of -2.0 (backwards) .. 0 (stop) .. +2.0 (forwards)
-		        vc.setSpeed(0.5);
-
-                // With setSteeringWheelAngle, you can steer in the range of -26 (left) .. 0 (straight) .. +25 (right)
-			/* To calculate desiredsteeringwheelangle*/
-	double calDSWA = 0;
-			if((sd.getExampleData()>575 && sd.getExampleData()<640)||(sd.getExampleData()>0 && sd.getExampleData()<50)){
-			  calDSWA = 0;
-			}
-			else if((sd.getExampleData()>300 && sd.getExampleData()<575)){
-			  calDSWA = -25;
-			}
-			else if((sd.getExampleData()>100 && sd.getExampleData()<300)){
-			  calDSWA = 25;
-			}
-			else{
-			  calDSWA = 0;
-			}
-		
+			//double desiredSteeringWheelAngle;
+			 
+			//double rfsen,rbsen,fsen,bsen;
+			//desiredSteeringWheelAngle = 0;
 			
-			double desiredSteeringWheelAngle = calDSWA; // 4 degree but SteeringWheelAngle expects the angle in radians!
-		        vc.setSteeringWheelAngle(desiredSteeringWheelAngle * Constants::DEG2RAD);
+			// Frot Right and Back right for distance detection 0,2
+			// front and back to adjust to not to hit something   // Safe Value Reading between 16 and 17
 
-                // You can also turn on or off various lights:
-                vc.setBrakeLights(false);
-                vc.setLeftFlashingLights(false);
-                vc.setRightFlashingLights(true);
+			// rfsen = sbd.getDistance(0); //FR IR 4
+			// rbsen = sbd.getDistance(2); //BR IR 5
+			double comp = sbd.getDistance(4) + sbd.getDistance(5);
+						
+			if( (16 < comp) && (comp < 18) ){ // to find parking place  
+			  psfound = 1;
+			}
+			
+			if(!(psfound == 1)){
+			  vc.setSpeed(2);
+			}
+			
+			if((psfound == 1)){ // Parking space found
+			  if(psfonlyonce == 0){ // functions which has to execute only once after found
+			    psfonlyonce = 1;
+			    desiredPosition = vd.getPosition(); // position of car when found parking space
+			    desiredHeading = vd.getHeading();
+			    vc.setAcceleration(0);
+			    vc.setSpeed(0);
+			    
+			  }
+			  // Replace below two with ,, move two units forward i.e. Y + 2 
+			  // drive until you see a distance range of FRIR more than -1
+			  // if((vd.getVelocity >1)){
+			    //  vc.setAcceleration(0);
+			   vc.setSteeringWheelAngle(-1);
+			    vc.setSpeed(-0.5);
+			   
 
+			      //		    printf("XIN %f\n", position.getX()); // position.getX() + 3 = desired X position
+			    //printf("YIN %f\n", position.getY()); // position.getY() = desired Y position
+			  
+			    //}
+			    //else
+			    //vc.setSpeed(1);  
+			}
+			
+			// 4 degree but SteeringWheelAngle expects the angle in radians!
+
+			//	        vc.setSteeringWheelAngle(1);			
+
+
+			    printf("Heading %f\n",vd.getHeading());
+ 
+			    position = vd.getPosition();
+
+			    vc.setBrakeLights(false);
+			vc.setLeftFlashingLights(false);
+			vc.setRightFlashingLights(false);
+			
+			
+			
 		        // Create container for finally sending the data.
 		        Container c(Container::VEHICLECONTROL, vc);
 		        // Send container.
@@ -114,4 +145,38 @@ namespace msv {
 	        return ModuleState::OKAY;
         }
 } // msv
+
+
+
+
+			  /**
+			    && ( (vc.getSpeed() > 0) && (vc.getSpeed() < 0) )
+			   
+			  vc.setSpeed(0);
+
+			// printf("%d\n", (int)psfound);
+
+			// printf("X %f\n", position.getX());
+			// printf("Y %f\n", position.getY());
+			// printf("Z %f\n", position.getZ());
+			
+			//printf("two %f\n", sbd.getDistance(4)+sbd.getDistance(5));
+			//printf("%d\n", (int)psfound);
+			// printf("FRIR %f\n", sbd.getDistance(0));
+			// printf("One %f\n", sbd.getDistance(1));
+			// printf("BRIR %f\n", sbd.getDistance(2));
+			// printf("Three %f\n", sbd.getDistance(3));
+			//	printf("Four %f\n", sbd.getDistance(4));
+			//	printf("Five %f\n", sbd.getDistance(5));
+
+ 			// printf("Zero %f\n", sbd.getDistance(0));
+ 			// printf("One %f\n", sbd.getDistance(1));
+			// printf("Two %f\n", sbd.getDistance(2));
+			// printf("Three %f\n", sbd.getDistance(3));
+			// printf("Four %f\n", sbd.getDistance(4));
+			// printf("Five %f\n", sbd.getDistance(5));
+ 
+
+
+			  **/
 

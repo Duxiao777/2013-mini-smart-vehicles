@@ -1,8 +1,8 @@
-# Install script for directory: /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv
+# Install script for directory: /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/opt/msv/group-5")
+  SET(CMAKE_INSTALL_PREFIX "/usr/local")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,11 +34,11 @@ ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/msv-data/cmake_install.cmake")
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/lanedetector/cmake_install.cmake")
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/driver/cmake_install.cmake")
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/proxy/cmake_install.cmake")
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/UDP_Server/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/msv-data/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/lanedetector/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/driver/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/proxy/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/UDP_Server/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

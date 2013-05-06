@@ -1,8 +1,8 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/supercomponentlib.dir/src/GlobalConfigurationProvider.cpp.o"
   "CMakeFiles/supercomponentlib.dir/src/SuperComponent.cpp.o"
-  "CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.o"
   "CMakeFiles/supercomponentlib.dir/src/ConnectedModules.cpp.o"
+  "CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.o"
   "libsupercomponentlib.pdb"
   "libsupercomponentlib.a"
 )

@@ -1,2 +1,2 @@
-/usr/bin/ar cr libproxylib.a  CMakeFiles/proxylib.dir/src/Proxy.cpp.o CMakeFiles/proxylib.dir/src/PointSensor.cpp.o
+/usr/bin/ar cr libproxylib.a  CMakeFiles/proxylib.dir/src/PointSensor.cpp.o CMakeFiles/proxylib.dir/src/Proxy.cpp.o
 /usr/bin/ranlib libproxylib.a

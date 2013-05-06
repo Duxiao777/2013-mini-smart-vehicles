@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
+CMAKE_SOURCE_DIR = /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
+CMAKE_BINARY_DIR = /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -117,9 +117,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

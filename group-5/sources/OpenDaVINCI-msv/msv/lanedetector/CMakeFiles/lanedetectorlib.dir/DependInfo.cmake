@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/lanedetector/src/LaneDetector.cpp" "/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/lanedetector/CMakeFiles/lanedetectorlib.dir/src/LaneDetector.cpp.o"
+  "/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/lanedetector/src/LaneDetector.cpp" "/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/lanedetector/CMakeFiles/lanedetectorlib.dir/src/LaneDetector.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

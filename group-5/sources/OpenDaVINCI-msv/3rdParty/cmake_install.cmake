@@ -1,8 +1,8 @@
-# Install script for directory: /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty
+# Install script for directory: /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/opt/msv/group-5")
+  SET(CMAKE_INSTALL_PREFIX "/usr/local")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,9 +34,9 @@ ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/zlib-1.2.3/cmake_install.cmake")
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/libzip-0.9/cmake_install.cmake")
-  INCLUDE("/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/libdb-4.6.21/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/zlib-1.2.3/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/libzip-0.9/cmake_install.cmake")
+  INCLUDE("/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/libdb-4.6.21/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

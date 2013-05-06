@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
+CMAKE_SOURCE_DIR = /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
+CMAKE_BINARY_DIR = /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -117,14 +117,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(CMAKE_COMMAND) -E cmake_progress_start /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/supercomponent/CMakeFiles/progress.marks
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles 0
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(CMAKE_COMMAND) -E cmake_progress_start /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/supercomponent/CMakeFiles/progress.marks
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/clean
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/clean
 .PHONY : clean
 
 # The main clean target
@@ -133,22 +133,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/preinstall
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/preinstall
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 supercomponent/CMakeFiles/SupercomponentTestSuite.dir/rule:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/CMakeFiles/SupercomponentTestSuite.dir/rule
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/CMakeFiles/SupercomponentTestSuite.dir/rule
 .PHONY : supercomponent/CMakeFiles/SupercomponentTestSuite.dir/rule
 
 # Convenience name for target.
@@ -157,12 +157,12 @@ SupercomponentTestSuite: supercomponent/CMakeFiles/SupercomponentTestSuite.dir/r
 
 # fast build rule for target.
 SupercomponentTestSuite/fast:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build
 .PHONY : SupercomponentTestSuite/fast
 
 # Convenience name for target.
 supercomponent/CMakeFiles/supercomponent.dir/rule:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/CMakeFiles/supercomponent.dir/rule
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/CMakeFiles/supercomponent.dir/rule
 .PHONY : supercomponent/CMakeFiles/supercomponent.dir/rule
 
 # Convenience name for target.
@@ -171,12 +171,12 @@ supercomponent: supercomponent/CMakeFiles/supercomponent.dir/rule
 
 # fast build rule for target.
 supercomponent/fast:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/build
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/build
 .PHONY : supercomponent/fast
 
 # Convenience name for target.
 supercomponent/CMakeFiles/supercomponentlib.dir/rule:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/CMakeFiles/supercomponentlib.dir/rule
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f CMakeFiles/Makefile2 supercomponent/CMakeFiles/supercomponentlib.dir/rule
 .PHONY : supercomponent/CMakeFiles/supercomponentlib.dir/rule
 
 # Convenience name for target.
@@ -185,7 +185,7 @@ supercomponentlib: supercomponent/CMakeFiles/supercomponentlib.dir/rule
 
 # fast build rule for target.
 supercomponentlib/fast:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/build
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/build
 .PHONY : supercomponentlib/fast
 
 SupercomponentTestSuite.o: SupercomponentTestSuite.cpp.o
@@ -193,7 +193,7 @@ SupercomponentTestSuite.o: SupercomponentTestSuite.cpp.o
 
 # target to build an object file
 SupercomponentTestSuite.cpp.o:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/SupercomponentTestSuite.cpp.o
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/SupercomponentTestSuite.cpp.o
 .PHONY : SupercomponentTestSuite.cpp.o
 
 SupercomponentTestSuite.i: SupercomponentTestSuite.cpp.i
@@ -201,7 +201,7 @@ SupercomponentTestSuite.i: SupercomponentTestSuite.cpp.i
 
 # target to preprocess a source file
 SupercomponentTestSuite.cpp.i:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/SupercomponentTestSuite.cpp.i
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/SupercomponentTestSuite.cpp.i
 .PHONY : SupercomponentTestSuite.cpp.i
 
 SupercomponentTestSuite.s: SupercomponentTestSuite.cpp.s
@@ -209,7 +209,7 @@ SupercomponentTestSuite.s: SupercomponentTestSuite.cpp.s
 
 # target to generate assembly for a file
 SupercomponentTestSuite.cpp.s:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/SupercomponentTestSuite.cpp.s
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/SupercomponentTestSuite.dir/build.make supercomponent/CMakeFiles/SupercomponentTestSuite.dir/SupercomponentTestSuite.cpp.s
 .PHONY : SupercomponentTestSuite.cpp.s
 
 apps/supercomponent.o: apps/supercomponent.cpp.o
@@ -217,7 +217,7 @@ apps/supercomponent.o: apps/supercomponent.cpp.o
 
 # target to build an object file
 apps/supercomponent.cpp.o:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/apps/supercomponent.cpp.o
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/apps/supercomponent.cpp.o
 .PHONY : apps/supercomponent.cpp.o
 
 apps/supercomponent.i: apps/supercomponent.cpp.i
@@ -225,7 +225,7 @@ apps/supercomponent.i: apps/supercomponent.cpp.i
 
 # target to preprocess a source file
 apps/supercomponent.cpp.i:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/apps/supercomponent.cpp.i
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/apps/supercomponent.cpp.i
 .PHONY : apps/supercomponent.cpp.i
 
 apps/supercomponent.s: apps/supercomponent.cpp.s
@@ -233,7 +233,7 @@ apps/supercomponent.s: apps/supercomponent.cpp.s
 
 # target to generate assembly for a file
 apps/supercomponent.cpp.s:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/apps/supercomponent.cpp.s
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponent.dir/build.make supercomponent/CMakeFiles/supercomponent.dir/apps/supercomponent.cpp.s
 .PHONY : apps/supercomponent.cpp.s
 
 src/ConnectedModule.o: src/ConnectedModule.cpp.o
@@ -241,7 +241,7 @@ src/ConnectedModule.o: src/ConnectedModule.cpp.o
 
 # target to build an object file
 src/ConnectedModule.cpp.o:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.o
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.o
 .PHONY : src/ConnectedModule.cpp.o
 
 src/ConnectedModule.i: src/ConnectedModule.cpp.i
@@ -249,7 +249,7 @@ src/ConnectedModule.i: src/ConnectedModule.cpp.i
 
 # target to preprocess a source file
 src/ConnectedModule.cpp.i:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.i
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.i
 .PHONY : src/ConnectedModule.cpp.i
 
 src/ConnectedModule.s: src/ConnectedModule.cpp.s
@@ -257,7 +257,7 @@ src/ConnectedModule.s: src/ConnectedModule.cpp.s
 
 # target to generate assembly for a file
 src/ConnectedModule.cpp.s:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.s
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModule.cpp.s
 .PHONY : src/ConnectedModule.cpp.s
 
 src/ConnectedModules.o: src/ConnectedModules.cpp.o
@@ -265,7 +265,7 @@ src/ConnectedModules.o: src/ConnectedModules.cpp.o
 
 # target to build an object file
 src/ConnectedModules.cpp.o:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModules.cpp.o
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModules.cpp.o
 .PHONY : src/ConnectedModules.cpp.o
 
 src/ConnectedModules.i: src/ConnectedModules.cpp.i
@@ -273,7 +273,7 @@ src/ConnectedModules.i: src/ConnectedModules.cpp.i
 
 # target to preprocess a source file
 src/ConnectedModules.cpp.i:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModules.cpp.i
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModules.cpp.i
 .PHONY : src/ConnectedModules.cpp.i
 
 src/ConnectedModules.s: src/ConnectedModules.cpp.s
@@ -281,7 +281,7 @@ src/ConnectedModules.s: src/ConnectedModules.cpp.s
 
 # target to generate assembly for a file
 src/ConnectedModules.cpp.s:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModules.cpp.s
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/ConnectedModules.cpp.s
 .PHONY : src/ConnectedModules.cpp.s
 
 src/GlobalConfigurationProvider.o: src/GlobalConfigurationProvider.cpp.o
@@ -289,7 +289,7 @@ src/GlobalConfigurationProvider.o: src/GlobalConfigurationProvider.cpp.o
 
 # target to build an object file
 src/GlobalConfigurationProvider.cpp.o:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/GlobalConfigurationProvider.cpp.o
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/GlobalConfigurationProvider.cpp.o
 .PHONY : src/GlobalConfigurationProvider.cpp.o
 
 src/GlobalConfigurationProvider.i: src/GlobalConfigurationProvider.cpp.i
@@ -297,7 +297,7 @@ src/GlobalConfigurationProvider.i: src/GlobalConfigurationProvider.cpp.i
 
 # target to preprocess a source file
 src/GlobalConfigurationProvider.cpp.i:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/GlobalConfigurationProvider.cpp.i
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/GlobalConfigurationProvider.cpp.i
 .PHONY : src/GlobalConfigurationProvider.cpp.i
 
 src/GlobalConfigurationProvider.s: src/GlobalConfigurationProvider.cpp.s
@@ -305,7 +305,7 @@ src/GlobalConfigurationProvider.s: src/GlobalConfigurationProvider.cpp.s
 
 # target to generate assembly for a file
 src/GlobalConfigurationProvider.cpp.s:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/GlobalConfigurationProvider.cpp.s
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/GlobalConfigurationProvider.cpp.s
 .PHONY : src/GlobalConfigurationProvider.cpp.s
 
 src/SuperComponent.o: src/SuperComponent.cpp.o
@@ -313,7 +313,7 @@ src/SuperComponent.o: src/SuperComponent.cpp.o
 
 # target to build an object file
 src/SuperComponent.cpp.o:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/SuperComponent.cpp.o
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/SuperComponent.cpp.o
 .PHONY : src/SuperComponent.cpp.o
 
 src/SuperComponent.i: src/SuperComponent.cpp.i
@@ -321,7 +321,7 @@ src/SuperComponent.i: src/SuperComponent.cpp.i
 
 # target to preprocess a source file
 src/SuperComponent.cpp.i:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/SuperComponent.cpp.i
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/SuperComponent.cpp.i
 .PHONY : src/SuperComponent.cpp.i
 
 src/SuperComponent.s: src/SuperComponent.cpp.s
@@ -329,7 +329,7 @@ src/SuperComponent.s: src/SuperComponent.cpp.s
 
 # target to generate assembly for a file
 src/SuperComponent.cpp.s:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/SuperComponent.cpp.s
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(MAKE) -f supercomponent/CMakeFiles/supercomponentlib.dir/build.make supercomponent/CMakeFiles/supercomponentlib.dir/src/SuperComponent.cpp.s
 .PHONY : src/SuperComponent.cpp.s
 
 # Help Target
@@ -377,6 +377,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,6 +1,6 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/proxylib.dir/src/Proxy.cpp.o"
   "CMakeFiles/proxylib.dir/src/PointSensor.cpp.o"
+  "CMakeFiles/proxylib.dir/src/Proxy.cpp.o"
   "libproxylib.pdb"
   "libproxylib.a"
 )

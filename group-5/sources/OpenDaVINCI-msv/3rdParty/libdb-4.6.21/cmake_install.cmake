@@ -1,8 +1,8 @@
-# Install script for directory: /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/libdb-4.6.21
+# Install script for directory: /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/3rdParty/libdb-4.6.21
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/opt/msv/group-5")
+  SET(CMAKE_INSTALL_PREFIX "/usr/local")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

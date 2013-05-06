@@ -1,2 +1,2 @@
-/usr/bin/ar cr libmsv-data.a  CMakeFiles/msv-data.dir/src/SensorBoardData.cpp.o CMakeFiles/msv-data.dir/src/UserButtonData.cpp.o CMakeFiles/msv-data.dir/src/SteeringData.cpp.o
+/usr/bin/ar cr libmsv-data.a  CMakeFiles/msv-data.dir/src/SteeringData.cpp.o CMakeFiles/msv-data.dir/src/UserButtonData.cpp.o CMakeFiles/msv-data.dir/src/SensorBoardData.cpp.o
 /usr/bin/ranlib libmsv-data.a

@@ -15,12 +15,12 @@
 int main() {
  return CxxTest::XmlFilePrinter().run();
 }
-#include "/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/cockpit/testsuites/CockpitTestSuite.h"
+#include "/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/cockpit/testsuites/CockpitTestSuite.h"
 
 static CockpitTest suite_CockpitTest;
 
 static CxxTest::List Tests_CockpitTest = { 0, 0 };
-CxxTest::StaticSuiteDescription suiteDescription_CockpitTest( "/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/cockpit/testsuites/CockpitTestSuite.h", 36, "CockpitTest", suite_CockpitTest, Tests_CockpitTest );
+CxxTest::StaticSuiteDescription suiteDescription_CockpitTest( "/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/cockpit/testsuites/CockpitTestSuite.h", 36, "CockpitTest", suite_CockpitTest, Tests_CockpitTest );
 
 static class TestDescription_CockpitTest_testCockpitSuccessfullyCreated : public CxxTest::RealTestDescription {
 public:

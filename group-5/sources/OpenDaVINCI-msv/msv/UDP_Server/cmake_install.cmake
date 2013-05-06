@@ -1,8 +1,8 @@
-# Install script for directory: /home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/UDP_Server
+# Install script for directory: /home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/UDP_Server
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/opt/msv/group-5")
+  SET(CMAKE_INSTALL_PREFIX "/usr/local")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,7 +39,7 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/UDP_Server"
          RPATH "")
   ENDIF()
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/msv/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/UDP_Server/UDP_Server")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/gokul/2013-mini-smart-vehicles/group-5/sources/OpenDaVINCI-msv/msv/UDP_Server/UDP_Server")
   IF(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/UDP_Server" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/UDP_Server")
     IF(CMAKE_INSTALL_DO_STRIP)

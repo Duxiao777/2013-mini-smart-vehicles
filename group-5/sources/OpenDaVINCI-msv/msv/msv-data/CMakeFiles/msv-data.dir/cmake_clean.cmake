@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/msv-data.dir/src/SensorBoardData.cpp.o"
-  "CMakeFiles/msv-data.dir/src/UserButtonData.cpp.o"
   "CMakeFiles/msv-data.dir/src/SteeringData.cpp.o"
+  "CMakeFiles/msv-data.dir/src/UserButtonData.cpp.o"
+  "CMakeFiles/msv-data.dir/src/SensorBoardData.cpp.o"
   "libmsv-data.pdb"
   "libmsv-data.a"
 )
