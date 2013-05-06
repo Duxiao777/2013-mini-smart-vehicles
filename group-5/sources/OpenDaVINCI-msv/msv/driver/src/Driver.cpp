@@ -110,79 +110,65 @@ namespace msv {
 			  // if((vd.getVelocity >1)){
 			  //  vc.setAcceleration(0);
 			  
-			  if( vd.getPosition().getX() < desiredPosition.getX() ){ // if current position X is less than desired position
+			  if( vd.getPosition().getX() < desiredPosition.getX()+3 ){ // if current position X is less than desired position
 			    
- 			    if( (sbd.getDistance(1) < 0.9) && (sbd.getDistance(3) < 0.9) ){ // If no IR front and back are having any reading values
-			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(25);
-				vc.setSpeed(-0.2);
-			      }
-			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(-25);
-				vc.setSpeed(0.2);
-			      }
-			      else { // if current position Y matches desired position Y
-				vc.setSteeringWheelAngle(-25);
-				vc.setSpeed(0.2);}
+			    if( ((sbd.getDistance(1) < 2) || (sbd.getDistance(3) > 2)) && (vd.getHeading() < 1 ) ){ // it CONDITION then only go Backward
+			      	vc.setSteeringWheelAngle(25);
+			  	vc.setSpeed(-0.5);
+			    }
+
+			    else if( ((sbd.getDistance(1) < 2) || (sbd.getDistance(3) > 2)) && (vd.getHeading() > 2 ) ){ // it CONDITION then only go Backward
+			      vc.setSteeringWheelAngle(-25);
+			      vc.setSpeed(-0.5);
 			    }
 			    
-			    else if((sbd.getDistance(1) < 2 ){ // it CONDITION then only go backward
-			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(25);
-				vc.setSpeed(0.2);
-			      }
-			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(-25);
-				vc.setSpeed(0.2);
-			      }
+			    else if(((sbd.getDistance(1) > 10) || (sbd.getDistance(3) < 2)) && (vd.getHeading() < 1 )){ // it CONDITION then only go Backward
+			      vc.setSteeringWheelAngle(-25);
+			      vc.setSpeed(0.5);
 			    }
 
-			    else if((sbd.getDistance(3) + 1) > sbd.getDistance(1) ){ // it CONDITION then only go backward
-			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(25);
-				vc.setSpeed(-0.2);
-			      }
-			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(-25);
-				vc.setSpeed(-0.2);
-			      }
+			    else if(((sbd.getDistance(1) > 10) || (sbd.getDistance(3) < 2)) && (vd.getHeading() > 2 )){ // it CONDITION then only go Backward
+			      vc.setSteeringWheelAngle(25);
+			      vc.setSpeed(0.5);
 			    }
-
-
+			    
+			    else {
+			      vc.setSteeringWheelAngle(25);
+			      vc.setSpeed(0.5);
+			    }
+			  
+			  
+			  printf("Desired X %f\n", desiredPosition.getX()+3); // position.getX() + 3 = desired X position
+			  printf("Result X %f\n\n", vd.getPosition().getX());
+			  
+ 			  printf("IRFR %f\n", sbd.getDistance(0)); 
+			  printf("IRBR %f\n", sbd.getDistance(2)); 
+			  printf("****USF**** %f\n", sbd.getDistance(3));
+			  printf("****IRB**** %f\n", sbd.getDistance(1));
+			  printf("USFR %f\n", sbd.getDistance(4));
+			  printf("USBR %f\n", sbd.getDistance(5));
+			  printf("Heading %f\n",vd.getHeading());
+			  
 			  }
+
+			  printf("Desired X %f\n", desiredPosition.getX()+3); // position.getX() + 3 = desired X position
+			  printf("Result X %f\n\n", vd.getPosition().getX());
 			  
-			  
-			  if( vd.getPosition().getX() > desiredPosition.getX() ){ // if current position X is less than desired position
-			    
-			    if( (sbd.getDistance(1) < 0.9) || (sbd.getDistance(3) < 0.9) ){ // If no IR front and back are having any reading values
-			      if(vd.getPosition().getY() > desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(-25);
-				vc.setSpeed(-0.2);
-			      }
-			      else if(vd.getPosition().getY() < desiredPosition.getY()){ // if current position Y is greater than desired position
-				vc.setSteeringWheelAngle(25);
-				vc.setSpeed(0.2);
-			      }
-			    }
-			    
-			    
-			  }
-			  
-			      //		    printf("XIN %f\n", position.getX()); // position.getX() + 3 = desired X position
-			    //printf("YIN %f\n", position.getY()); // position.getY() = desired Y position
-			  
-			    //}
-			    //else
-			    //vc.setSpeed(1);  
 			}
 			
-			// 4 degree but SteeringWheelAngle expects the angle in radians!
-
+			//		    printf("XIN %f\n", position.getX()); // position.getX() + 3 = desired X position
+			//printf("YIN %f\n", position.getY()); // position.getY() = desired Y position
+			
+			//}
+			    //else
+			    //vc.setSpeed(1);  
+			
+	  
+	  // 4 degree but SteeringWheelAngle expects the angle in radians!
+	  
 			//	        vc.setSteeringWheelAngle(1);			
 
-
-						    printf("Heading %f\n",vd.getHeading());
- 
+			
 			    //			    position = vd.getPosition();
 
 			    vc.setBrakeLights(false);
@@ -218,13 +204,13 @@ namespace msv {
 			//printf("two %f\n", sbd.getDistance(4)+sbd.getDistance(5));
 			//printf("%d\n", (int)psfound);
 			// printf("FRIR %f\n", sbd.getDistance(0));
-			// printf("One %f\n", sbd.getDistance(1));
+ 			// printf("One %f\n", sbd.getDistance(1));
 			// printf("BRIR %f\n", sbd.getDistance(2));
 			// printf("Three %f\n", sbd.getDistance(3));
 			//	printf("Four %f\n", sbd.getDistance(4));
 			//	printf("Five %f\n", sbd.getDistance(5));
 
- 			// printf("Zero %f\n", sbd.getDistance(0));
+  			// printf("Zero %f\n", sbd.getDistance(0));
  			// printf("One %f\n", sbd.getDistance(1));
 			// printf("Two %f\n", sbd.getDistance(2));
 			// printf("Three %f\n", sbd.getDistance(3));
