@@ -46,7 +46,7 @@ namespace msv {
 
   // This method will do the main data processing job.
   ModuleState::MODULE_EXITCODE Driver::body() {
-    bool psfound,psfonlyonce,move2units; // parking space found, 0 means not found as 1 found
+    bool psfound = false, psfonlyonce = false, move2units = false, twmb2 = false; // parking space found, 0 means not found as 1 found
     //	  bool frir;
     Point3 desiredPosition;
     //	   double desiredHeading; // if vehicle turns right the value will decrease and vice versa
@@ -89,34 +89,55 @@ namespace msv {
       double comp = sbd.getDistance(4) + sbd.getDistance(5);
       
       if( (16 < comp) && (comp < 18) ){ // to find parking place  
-	psfound = 1;
+	psfound = true;
+	printf("ps found");
       }
       
-      if(!(psfound == 1)){
-	vc.setSpeed(2);
-      }
+      printf("PS printing %d\n", (int)psfound );
       
-      if((psfound == 1)){ // Parking space found
-	if(psfonlyonce == 0){ // functions which has to execute only once after found
-	  psfonlyonce = 1;
+      if((psfound == true)){ // Parking space found
+	if(psfonlyonce == false){ // functions which has to execute only once after found
+	  psfonlyonce = true;
 	  desiredPosition = vd.getPosition(); // position of car when found parking space
 	  //desiredHeading = vd.getHeading();
-	  
-	  
+	  printf("only once");
+	    	  
 	}
 	/*Start move two units forward i.e. Y + 2 */ 
-	if((move2units == 0)&&(desiredPosition.getY() + 2 > vd.getPosition().getY())){
+	if((move2units == false)&&(desiredPosition.getY() + 2 > vd.getPosition().getY())){
 	  vc.setSpeed(1);
 	  
 	}
-	else if((move2units == 0)&&(desiredPosition.getY() + 2 < vd.getPosition().getY())){
-	  move2units = 1;
+	else if((move2units == false)&&(desiredPosition.getY() + 2 < vd.getPosition().getY())){
+	  move2units = true;
+	   printf("moving 2 units");
 	  vc.setAcceleration(0);
 	  vc.setSpeed(0);
 	}
 	/* end move two uints */
 	
+ 	// Turn wheel to right and move back two units
+	else if( (((twmb2 == false) && (move2units == true)) && (psfonlyonce == true)) && (desiredPosition.getX() + 2 > vd.getPosition().getX())){
+	  vc.setSteeringWheelAngle(25);
+	  vc.setSpeed(-1);
+	  printf("WTF !!!!!!!!!!!");
+	}
+
+	else if( (((twmb2 == false) && (move2units == true)) && (psfonlyonce == true)) && (desiredPosition.getX() + 2 < vd.getPosition().getX())){
+	  vc.setSteeringWheelAngle(0);
+	  vc.setSpeed(-1);
+	  twmb2 = 1;
+	  printf("WTFFFFFFFFFFF");
+	}
+
+
+
 	
+      }
+      
+      else if(!(psfound == true)){
+	printf("normal");
+	vc.setSpeed(2);
       }
       
       
